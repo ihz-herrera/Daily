@@ -1,5 +1,6 @@
 ﻿Imports BISoft.Ejercicios.Infraestructura.Contextos
 Imports BISoft.Ejercicios.Infraestructura.Entidades
+Imports BISoft.Ejercicios.Infraestructura.Repositorios
 Imports Microsoft.EntityFrameworkCore
 
 Public Class frmProveedores
@@ -11,22 +12,24 @@ Public Class frmProveedores
 
         Dim contexto As New Context
 
+        'Consultar cadena de conexion de variables de ambiente
+        Dim cadenaConexion = Environment.GetEnvironmentVariable("CONEXION_BD")
+
+
+
+        Dim repo As New ProveedoresDapperRepository()
 
         'Consultar si el proveedor ya existe
-        Dim proveedor = contexto.Proveedores.Where(Function(p) p.Id = txtId.Text _
-            Or p.Nombre = txtNombre.Text).AsNoTracking.FirstOrDefault
+        Dim proveedor = repo.ObtenerProveedorPorId(txtId.Text)
 
         If (proveedor IsNot Nothing) Then
-
-            'proveedor.Nombre = txtNombre.Text
-            'proveedor.Direccion = txtDireccion.Text
 
             proveedor = New Proveedor
             proveedor.Id = txtId.Text
             proveedor.Nombre = txtNombre.Text
             proveedor.Direccion = txtDireccion.Text
 
-            contexto.Proveedores.Update(proveedor)
+            repo.ActualizarProveedor(proveedor)
 
 
         Else
@@ -35,13 +38,11 @@ Public Class frmProveedores
             proveedor.Nombre = txtNombre.Text
             proveedor.Direccion = txtDireccion.Text
 
-            'Agregamos el proveedor al contexto
-            contexto.Proveedores.Add(proveedor)
+            repo.CrearProveedor(proveedor)
         End If
 
 
-        'Guardamos los cambios
-        contexto.SaveChanges()
+
 
         MsgBox("Proveedor guardado correctamente")
 
