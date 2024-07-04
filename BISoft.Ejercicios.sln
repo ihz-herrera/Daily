@@ -5,7 +5,9 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "BISoft.Ejercicios.Presentacion.WindowsForms", "BISoft.Ejercicios.Presentacion.WindowsForms\BISoft.Ejercicios.Presentacion.WindowsForms.vbproj", "{F452DB74-DFDA-4907-9E8B-86A3DBBF54FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BISoft.Ejercicios.Infraestructura", "BISoft.Ejercicios.Infraestructura\BISoft.Ejercicios.Infraestructura.csproj", "{3BF74F2F-1194-467F-90F3-DC2DDDE77FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Infraestructura", "BISoft.Ejercicios.Infraestructura\BISoft.Ejercicios.Infraestructura.csproj", "{3BF74F2F-1194-467F-90F3-DC2DDDE77FC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BISoft.Ejercicios.Aplicacion", "BISoft.Ejercicios.Aplicacion\BISoft.Ejercicios.Aplicacion.csproj", "{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3BF74F2F-1194-467F-90F3-DC2DDDE77FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BF74F2F-1194-467F-90F3-DC2DDDE77FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BF74F2F-1194-467F-90F3-DC2DDDE77FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using BISoft.Ejercicios.Infraestructura.Contextos;
+using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
 using Dapper;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Infraestructura.Repositorios
 {
-    public class ProveedoresDapperRepository
+    public class ProveedoresDapperRepository : IProveedoresRepository
     {
 
 

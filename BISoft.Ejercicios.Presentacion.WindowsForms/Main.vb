@@ -5,6 +5,10 @@
         ' Establecer cadena de conexion en variable de ambiente
         Environment.SetEnvironmentVariable("CONEXION_BD", "Server=.;Database=Prueba;Trusted_Connection=True;")
 
+        ' Establecer tipo de repositorio en variable de ambiente
+        Environment.SetEnvironmentVariable("TIPO_REPOSITORIO", "EF")
+
+
     End Sub
 
     Private Sub btnProveedores_Click(sender As Object, e As EventArgs) Handles btnProveedores.Click

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Infraestructura.Repositorios
 {
-    public class ProveedoresStoredRepository:ProveedoresRepository
+    public class ProveedoresStoredRepository:ProveedoresRepository 
     {
 
         private readonly Context _context;

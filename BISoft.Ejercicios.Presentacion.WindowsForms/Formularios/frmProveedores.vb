@@ -1,4 +1,6 @@
-﻿Imports BISoft.Ejercicios.Infraestructura.Contextos
+﻿Imports BISoft.Ejercicios.Aplicacion.Fabricas
+Imports BISoft.Ejercicios.Infraestructura.Contextos
+Imports BISoft.Ejercicios.Infraestructura.Contratos
 Imports BISoft.Ejercicios.Infraestructura.Entidades
 Imports BISoft.Ejercicios.Infraestructura.Repositorios
 Imports Microsoft.EntityFrameworkCore
@@ -14,10 +16,13 @@ Public Class frmProveedores
 
         'Consultar cadena de conexion de variables de ambiente
         Dim cadenaConexion = Environment.GetEnvironmentVariable("CONEXION_BD")
+        'Consulta typo repositorio de las variables de entorno
+        Dim tipoRepositorio = Environment.GetEnvironmentVariable("TIPO_REPOSITORIO")
 
 
 
-        Dim repo As New ProveedoresDapperRepository()
+        Dim repo As IProveedoresRepository = ProveedoresRepositoryFactory _
+        .GetProveedoresRepository(tipoRepositorio)
 
         'Consultar si el proveedor ya existe
         Dim proveedor = repo.ObtenerProveedorPorId(txtId.Text)

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BISoft.Ejercicios.Aplicacion\BISoft.Ejercicios.Aplicacion.csproj" />
     <ProjectReference Include="..\BISoft.Ejercicios.Infraestructura\BISoft.Ejercicios.Infraestructura.csproj" />
   </ItemGroup>
 

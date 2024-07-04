@@ -1,23 +1,20 @@
 ﻿using BISoft.Ejercicios.Infraestructura.Contextos;
+using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Infraestructura.Repositorios
 {
-    public class ProveedoresRepository
+    public class ProveedoresRepository : IProveedoresRepository
     {
 
-        private readonly Context _contexto;
+         private readonly Context _contexto;
+
 
         public ProveedoresRepository(Context contexto)
         {
             _contexto = contexto;
+
         }
 
         public virtual List<Proveedor> ObtenerProveedores()
@@ -27,6 +24,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
 
         public Proveedor ObtenerProveedorPorId(int id)
         {
+            
+           Task.Delay(4000).Wait();
+
             return _contexto.Proveedores
                 .AsNoTracking()
                 .FirstOrDefault(x => x.Id == id);
