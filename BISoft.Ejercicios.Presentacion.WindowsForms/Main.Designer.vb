@@ -24,6 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         btnProveedores = New Button()
         btnCompras = New Button()
+        btnProductos = New Button()
         SuspendLayout()
         ' 
         ' btnProveedores
@@ -44,11 +45,21 @@ Partial Class Form1
         btnCompras.Text = "Compras"
         btnCompras.UseVisualStyleBackColor = True
         ' 
+        ' btnProductos
+        ' 
+        btnProductos.Location = New Point(12, 138)
+        btnProductos.Name = "btnProductos"
+        btnProductos.Size = New Size(108, 29)
+        btnProductos.TabIndex = 2
+        btnProductos.Text = "Productos"
+        btnProductos.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(btnProductos)
         Controls.Add(btnCompras)
         Controls.Add(btnProveedores)
         Name = "Form1"
@@ -58,5 +69,6 @@ Partial Class Form1
 
     Friend WithEvents btnProveedores As Button
     Friend WithEvents btnCompras As Button
+    Friend WithEvents btnProductos As Button
 
 End Class

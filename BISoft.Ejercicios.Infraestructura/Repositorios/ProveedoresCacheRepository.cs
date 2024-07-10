@@ -34,21 +34,63 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         public void ActualizarProveedor(Proveedor proveedor)
         {
             _proveedoresRepository.ActualizarProveedor(proveedor);
+            InvalidarCache(proveedor.Id);
+        }
+
+        private void InvalidarCache(int id)
+        {
+            var CacheKey = $"Proveedor:{id}";
+
+
+            if (_cache.Contains(CacheKey))
+            {
+                 _cache.Remove(CacheKey);
+            }
+
+            InvalidarCache();
+        }
+
+        private void InvalidarCache()
+        {
+            var CacheKey = "Proveedores";
+
+            if (_cache.Contains(CacheKey))
+            {
+                _cache.Remove(CacheKey);
+            }
         }
 
         public void CrearProveedor(Proveedor proveedor)
         {
             _proveedoresRepository.CrearProveedor(proveedor);
+            InvalidarCache();
         }
 
         public void EliminarProveedor(int id)
         {
             _proveedoresRepository.EliminarProveedor(id);
+            InvalidarCache(id);
+            
         }
 
         public List<Proveedor> ObtenerProveedores()
         {
-            return _proveedoresRepository.ObtenerProveedores();
+            var CacheKey = "Proveedores";
+
+            if (_cache.Contains(CacheKey))
+            {
+                return _cache.Get(CacheKey) as List<Proveedor>;
+            }
+            else
+            {
+                var proveedores = _proveedoresRepository.ObtenerProveedores();
+
+                _cache.Set(CacheKey, proveedores, _policy);
+
+                return proveedores;
+            }
+
+            
         }
 
         public Proveedor ObtenerProveedorPorId(int id)

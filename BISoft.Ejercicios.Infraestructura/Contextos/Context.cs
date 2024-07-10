@@ -27,6 +27,47 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                 .HasMaxLength(50).IsRequired();
             modelBuilder.Entity<Proveedor>().Property(p => p.Direccion)
                 .HasMaxLength(50).IsRequired();
+
+
+            modelBuilder.Entity<Producto>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("genProductosCat");
+
+                entity.Property(e => e.ProductoId)
+                .HasColumnName("codigoProducto");
+
+                entity.Property(e => e.Costo)
+                    .HasColumnType("money")
+                    .HasColumnName("costo");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(50)
+                    .HasColumnName("nombreProducto");
+
+                entity.Property(e => e.Precio)
+                    .HasColumnType("money")
+                    .HasColumnName("precio");
+
+                entity.Property(e => e.Status)
+                .HasColumnName("status");
+            });
+
+
+            modelBuilder.Entity<Compra>(entity =>
+            {
+                entity.HasKey(e => e.ComprasId);
+
+                entity.Property(e => e.ComprasId).HasColumnName("comprasId");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Proveedor).HasColumnName("proveedor");
+            });
         }
 
     }

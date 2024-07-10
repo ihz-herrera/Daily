@@ -32,9 +32,11 @@ Partial Class frmProductos
         chkEstatus = New CheckBox()
         btnGuardar = New Button()
         ProveedorBindingSource = New BindingSource(components)
-        DataGridView1 = New DataGridView()
+        dgvProductos = New DataGridView()
+        txtCosto = New TextBox()
+        Label3 = New Label()
         CType(ProveedorBindingSource, ComponentModel.ISupportInitialize).BeginInit()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvProductos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Label1
@@ -88,7 +90,7 @@ Partial Class frmProductos
         ' chkEstatus
         ' 
         chkEstatus.AutoSize = True
-        chkEstatus.Location = New Point(12, 186)
+        chkEstatus.Location = New Point(12, 243)
         chkEstatus.Name = "chkEstatus"
         chkEstatus.Size = New Size(77, 24)
         chkEstatus.TabIndex = 8
@@ -97,7 +99,7 @@ Partial Class frmProductos
         ' 
         ' btnGuardar
         ' 
-        btnGuardar.Location = New Point(12, 232)
+        btnGuardar.Location = New Point(12, 289)
         btnGuardar.Name = "btnGuardar"
         btnGuardar.Size = New Size(94, 29)
         btnGuardar.TabIndex = 9
@@ -108,22 +110,41 @@ Partial Class frmProductos
         ' 
         ProveedorBindingSource.DataSource = GetType(Infraestructura.Entidades.Proveedor)
         ' 
-        ' DataGridView1
+        ' dgvProductos
         ' 
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(321, 24)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.RowHeadersWidth = 51
-        DataGridView1.RowTemplate.Height = 29
-        DataGridView1.Size = New Size(467, 237)
-        DataGridView1.TabIndex = 10
+        dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvProductos.Dock = DockStyle.Right
+        dgvProductos.Location = New Point(313, 0)
+        dgvProductos.Name = "dgvProductos"
+        dgvProductos.RowHeadersWidth = 51
+        dgvProductos.RowTemplate.Height = 29
+        dgvProductos.Size = New Size(632, 378)
+        dgvProductos.TabIndex = 10
+        ' 
+        ' txtCosto
+        ' 
+        txtCosto.Location = New Point(12, 200)
+        txtCosto.Name = "txtCosto"
+        txtCosto.Size = New Size(266, 27)
+        txtCosto.TabIndex = 12
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(12, 177)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(47, 20)
+        Label3.TabIndex = 11
+        Label3.Text = "Costo"
         ' 
         ' frmProductos
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 287)
-        Controls.Add(DataGridView1)
+        ClientSize = New Size(945, 378)
+        Controls.Add(txtCosto)
+        Controls.Add(Label3)
+        Controls.Add(dgvProductos)
         Controls.Add(btnGuardar)
         Controls.Add(chkEstatus)
         Controls.Add(TextBox3)
@@ -135,7 +156,7 @@ Partial Class frmProductos
         Name = "frmProductos"
         Text = "Productos"
         CType(ProveedorBindingSource, ComponentModel.ISupportInitialize).EndInit()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvProductos, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -149,5 +170,7 @@ Partial Class frmProductos
     Friend WithEvents chkEstatus As CheckBox
     Friend WithEvents btnGuardar As Button
     Friend WithEvents ProveedorBindingSource As BindingSource
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents dgvProductos As DataGridView
+    Friend WithEvents txtCosto As TextBox
+    Friend WithEvents Label3 As Label
 End Class
