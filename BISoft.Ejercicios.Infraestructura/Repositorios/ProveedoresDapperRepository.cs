@@ -5,6 +5,7 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
     {
 
 
-        public List<Proveedor> ObtenerProveedores()
+        public List<Proveedor> ObtenerTodos()
         {
             var query = "SELECT * FROM Proveedores";
 
@@ -24,7 +25,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
         }
 
-        public void CrearProveedor(Proveedor proveedor)
+        public void Crear(Proveedor proveedor)
         {
             var query = "INSERT INTO Proveedores (Id, Nombre, Direccion) VALUES (@Id, @Nombre, @Direccion)";
 
@@ -34,7 +35,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
         }
 
-        public void ActualizarProveedor(Proveedor proveedor)
+        public void Actualizar(Proveedor proveedor)
         {
             var query = "UPDATE Proveedores SET Nombre = @Nombre, Direccion = @Direccion WHERE Id = @Id";
 
@@ -64,5 +65,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
         }
 
+        public Proveedor ObtenerPorExpresion(Expression<Func<Proveedor, bool>> expresion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

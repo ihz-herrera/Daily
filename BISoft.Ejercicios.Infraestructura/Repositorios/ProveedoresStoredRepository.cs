@@ -19,7 +19,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             _context = context;
         }
 
-        public override List<Proveedor> ObtenerProveedores()
+        public override List<Proveedor> ObtenerTodos()
         {
             var result= _context.Proveedores
                 .FromSqlRaw("SELECT * FROM Proveedores")
@@ -29,7 +29,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
 
        
 
-        public override void CrearProveedor(Proveedor proveedor)
+        public override void Crear(Proveedor proveedor)
         {
             _context.Database.ExecuteSqlRaw("EXEC CrearProveedor @Id={0}, @Nombre={1}, @Direccion={2}"
                 , proveedor.Id, proveedor.Nombre, proveedor.Direccion);

@@ -25,9 +25,9 @@ Partial Class frmProductos
         components = New ComponentModel.Container()
         Label1 = New Label()
         txtId = New TextBox()
-        TextBox1 = New TextBox()
+        txtDescripcion = New TextBox()
         Label2 = New Label()
-        TextBox3 = New TextBox()
+        txtPrecio = New TextBox()
         Label4 = New Label()
         chkEstatus = New CheckBox()
         btnGuardar = New Button()
@@ -45,7 +45,7 @@ Partial Class frmProductos
         Label1.Location = New Point(12, 9)
         Label1.Name = "Label1"
         Label1.Size = New Size(22, 20)
-        Label1.TabIndex = 0
+        Label1.TabIndex = 1
         Label1.Text = "Id"
         ' 
         ' txtId
@@ -53,14 +53,14 @@ Partial Class frmProductos
         txtId.Location = New Point(12, 32)
         txtId.Name = "txtId"
         txtId.Size = New Size(125, 27)
-        txtId.TabIndex = 1
+        txtId.TabIndex = 2
         ' 
-        ' TextBox1
+        ' txtDescripcion
         ' 
-        TextBox1.Location = New Point(12, 89)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(266, 27)
-        TextBox1.TabIndex = 3
+        txtDescripcion.Location = New Point(12, 89)
+        txtDescripcion.Name = "txtDescripcion"
+        txtDescripcion.Size = New Size(266, 27)
+        txtDescripcion.TabIndex = 4
         ' 
         ' Label2
         ' 
@@ -68,15 +68,15 @@ Partial Class frmProductos
         Label2.Location = New Point(12, 66)
         Label2.Name = "Label2"
         Label2.Size = New Size(87, 20)
-        Label2.TabIndex = 2
+        Label2.TabIndex = 3
         Label2.Text = "Descripción"
         ' 
-        ' TextBox3
+        ' txtPrecio
         ' 
-        TextBox3.Location = New Point(12, 144)
-        TextBox3.Name = "TextBox3"
-        TextBox3.Size = New Size(266, 27)
-        TextBox3.TabIndex = 7
+        txtPrecio.Location = New Point(12, 144)
+        txtPrecio.Name = "txtPrecio"
+        txtPrecio.Size = New Size(266, 27)
+        txtPrecio.TabIndex = 6
         ' 
         ' Label4
         ' 
@@ -84,7 +84,7 @@ Partial Class frmProductos
         Label4.Location = New Point(12, 121)
         Label4.Name = "Label4"
         Label4.Size = New Size(50, 20)
-        Label4.TabIndex = 6
+        Label4.TabIndex = 5
         Label4.Text = "Precio"
         ' 
         ' chkEstatus
@@ -93,7 +93,7 @@ Partial Class frmProductos
         chkEstatus.Location = New Point(12, 243)
         chkEstatus.Name = "chkEstatus"
         chkEstatus.Size = New Size(77, 24)
-        chkEstatus.TabIndex = 8
+        chkEstatus.TabIndex = 9
         chkEstatus.Text = "Estatus"
         chkEstatus.UseVisualStyleBackColor = True
         ' 
@@ -102,7 +102,7 @@ Partial Class frmProductos
         btnGuardar.Location = New Point(12, 289)
         btnGuardar.Name = "btnGuardar"
         btnGuardar.Size = New Size(94, 29)
-        btnGuardar.TabIndex = 9
+        btnGuardar.TabIndex = 10
         btnGuardar.Text = "Guardar"
         btnGuardar.UseVisualStyleBackColor = True
         ' 
@@ -126,7 +126,7 @@ Partial Class frmProductos
         txtCosto.Location = New Point(12, 200)
         txtCosto.Name = "txtCosto"
         txtCosto.Size = New Size(266, 27)
-        txtCosto.TabIndex = 12
+        txtCosto.TabIndex = 8
         ' 
         ' Label3
         ' 
@@ -134,7 +134,7 @@ Partial Class frmProductos
         Label3.Location = New Point(12, 177)
         Label3.Name = "Label3"
         Label3.Size = New Size(47, 20)
-        Label3.TabIndex = 11
+        Label3.TabIndex = 7
         Label3.Text = "Costo"
         ' 
         ' frmProductos
@@ -147,9 +147,9 @@ Partial Class frmProductos
         Controls.Add(dgvProductos)
         Controls.Add(btnGuardar)
         Controls.Add(chkEstatus)
-        Controls.Add(TextBox3)
+        Controls.Add(txtPrecio)
         Controls.Add(Label4)
-        Controls.Add(TextBox1)
+        Controls.Add(txtDescripcion)
         Controls.Add(Label2)
         Controls.Add(txtId)
         Controls.Add(Label1)
@@ -163,9 +163,9 @@ Partial Class frmProductos
 
     Friend WithEvents Label1 As Label
     Friend WithEvents txtId As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtDescripcion As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents txtPrecio As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents chkEstatus As CheckBox
     Friend WithEvents btnGuardar As Button

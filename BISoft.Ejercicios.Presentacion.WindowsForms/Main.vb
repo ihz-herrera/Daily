@@ -19,4 +19,9 @@
         Dim frmProveedores As New frmProveedores
         frmProveedores.Show()
     End Sub
+
+    Private Sub btnProductos_Click(sender As Object, e As EventArgs) Handles btnProductos.Click
+        Dim frmProductos As New frmProductos
+        frmProductos.Show()
+    End Sub
 End Class

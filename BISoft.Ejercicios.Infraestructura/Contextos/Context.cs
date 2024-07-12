@@ -11,6 +11,8 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
     public class Context:DbContext
     {
         public DbSet<Proveedor> Proveedores  { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Compra> Compras { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,7 +33,7 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
             modelBuilder.Entity<Producto>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e=>  e.ProductoId);
 
                 entity.ToTable("genProductosCat");
 

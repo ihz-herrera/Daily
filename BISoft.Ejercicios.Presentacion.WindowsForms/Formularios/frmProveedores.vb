@@ -34,7 +34,7 @@ Public Class frmProveedores
             proveedor.Nombre = txtNombre.Text
             proveedor.Direccion = txtDireccion.Text
 
-            repo.ActualizarProveedor(proveedor)
+            repo.Actualizar(proveedor)
 
 
         Else
@@ -43,7 +43,7 @@ Public Class frmProveedores
             proveedor.Nombre = txtNombre.Text
             proveedor.Direccion = txtDireccion.Text
 
-            repo.CrearProveedor(proveedor)
+            repo.Crear(proveedor)
         End If
 
 

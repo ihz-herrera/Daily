@@ -4,6 +4,7 @@ using BISoft.Ejercicios.Infraestructura.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,9 +32,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             };
         }
 
-        public void ActualizarProveedor(Proveedor proveedor)
+        public void Actualizar(Proveedor proveedor)
         {
-            _proveedoresRepository.ActualizarProveedor(proveedor);
+            _proveedoresRepository.Actualizar(proveedor);
             InvalidarCache(proveedor.Id);
         }
 
@@ -60,9 +61,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
         }
 
-        public void CrearProveedor(Proveedor proveedor)
+        public void Crear(Proveedor proveedor)
         {
-            _proveedoresRepository.CrearProveedor(proveedor);
+            _proveedoresRepository.Crear(proveedor);
             InvalidarCache();
         }
 
@@ -73,7 +74,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             
         }
 
-        public List<Proveedor> ObtenerProveedores()
+        public List<Proveedor> ObtenerTodos()
         {
             var CacheKey = "Proveedores";
 
@@ -83,7 +84,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
             else
             {
-                var proveedores = _proveedoresRepository.ObtenerProveedores();
+                var proveedores = _proveedoresRepository.ObtenerTodos();
 
                 _cache.Set(CacheKey, proveedores, _policy);
 
@@ -111,6 +112,11 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
 
                 return proveedor;
             }
+        }
+
+        public Proveedor ObtenerPorExpresion(Expression<Func<Proveedor, bool>> expresion)
+        {
+            return _proveedoresRepository.ObtenerPorExpresion(expresion);
         }
     }
 }

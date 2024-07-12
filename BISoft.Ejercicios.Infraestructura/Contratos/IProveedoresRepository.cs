@@ -2,12 +2,10 @@
 
 namespace BISoft.Ejercicios.Infraestructura.Contratos
 {
-    public interface IProveedoresRepository
+    public interface IProveedoresRepository : IRepository<Proveedor>
     {
-        void ActualizarProveedor(Proveedor proveedor);
-        void CrearProveedor(Proveedor proveedor);
+       
         void EliminarProveedor(int id);
-        List<Proveedor> ObtenerProveedores();
         Proveedor ObtenerProveedorPorId(int id);
     }
 }
