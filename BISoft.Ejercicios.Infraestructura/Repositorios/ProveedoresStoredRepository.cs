@@ -19,19 +19,19 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             _context = context;
         }
 
-        public override List<Proveedor> ObtenerTodos()
+        public async override Task<List<Proveedor>> ObtenerTodos()
         {
-            var result= _context.Proveedores
+            var result= await _context.Proveedores
                 .FromSqlRaw("SELECT * FROM Proveedores")
-                .ToList();
+                .ToListAsync();
             return result;
         }
 
        
 
-        public override void Crear(Proveedor proveedor)
+        public async override Task Crear(Proveedor proveedor)
         {
-            _context.Database.ExecuteSqlRaw("EXEC CrearProveedor @Id={0}, @Nombre={1}, @Direccion={2}"
+            await _context.Database.ExecuteSqlRawAsync("EXEC CrearProveedor @Id={0}, @Nombre={1}, @Direccion={2}"
                 , proveedor.Id, proveedor.Nombre, proveedor.Direccion);
         }
 

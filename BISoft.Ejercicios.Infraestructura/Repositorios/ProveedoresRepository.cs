@@ -12,10 +12,10 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         {
         }
 
-        public Proveedor ObtenerProveedorPorId(int id)
+        public async Task<Proveedor> ObtenerProveedorPorId(int id)
         {
             
-           return ObtenerPorExpresion(x => x.Id == id);
+           return await ObtenerPorExpresion(x => x.Id == id);
         }
 
        

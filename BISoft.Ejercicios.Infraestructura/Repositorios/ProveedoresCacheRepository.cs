@@ -32,9 +32,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             };
         }
 
-        public void Actualizar(Proveedor proveedor)
+        public async Task Actualizar(Proveedor proveedor)
         {
-            _proveedoresRepository.Actualizar(proveedor);
+            await _proveedoresRepository.Actualizar(proveedor);
             InvalidarCache(proveedor.Id);
         }
 
@@ -61,9 +61,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
         }
 
-        public void Crear(Proveedor proveedor)
+        public async Task Crear(Proveedor proveedor)
         {
-            _proveedoresRepository.Crear(proveedor);
+            await _proveedoresRepository.Crear(proveedor);
             InvalidarCache();
         }
 
@@ -74,7 +74,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             
         }
 
-        public List<Proveedor> ObtenerTodos()
+        public async Task<List<Proveedor>> ObtenerTodos()
         {
             var CacheKey = "Proveedores";
 
@@ -84,7 +84,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
             else
             {
-                var proveedores = _proveedoresRepository.ObtenerTodos();
+                var proveedores = await _proveedoresRepository.ObtenerTodos();
 
                 _cache.Set(CacheKey, proveedores, _policy);
 
@@ -94,7 +94,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             
         }
 
-        public Proveedor ObtenerProveedorPorId(int id)
+        public async Task<Proveedor> ObtenerProveedorPorId(int id)
         {
 
             var CacheKey = $"Proveedor:{id}";
@@ -106,7 +106,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
             else
             {
-                var proveedor = _proveedoresRepository.ObtenerProveedorPorId(id);
+                var proveedor = await _proveedoresRepository.ObtenerProveedorPorId(id);
 
                 _cache.Set(CacheKey, proveedor, _policy);
 
@@ -114,9 +114,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             }
         }
 
-        public Proveedor ObtenerPorExpresion(Expression<Func<Proveedor, bool>> expresion)
+        public async Task<Proveedor> ObtenerPorExpresion(Expression<Func<Proveedor, bool>> expresion)
         {
-            return _proveedoresRepository.ObtenerPorExpresion(expresion);
+            return await _proveedoresRepository.ObtenerPorExpresion(expresion);
         }
     }
 }

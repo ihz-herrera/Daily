@@ -21,31 +21,35 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
 
         }
 
-        public virtual List<TEntity> ObtenerTodos()
+        public async virtual Task<List<TEntity>> ObtenerTodos()
         {
-            return _context.Set<TEntity>()
-                .AsNoTracking().ToList();
+            await Task.Delay(8000);
+
+            return await _context.Set<TEntity>()
+                .AsNoTracking().ToListAsync();
         }
 
-        public TEntity ObtenerPorExpresion(Expression<Func<TEntity,bool>> exp)
+        public async Task<TEntity> ObtenerPorExpresion(Expression<Func<TEntity,bool>> exp)
         {
-            Task.Delay(4000).Wait();
+            await Task.Delay(4000);
 
-            return _context.Set<TEntity>()
+            var resultado = await _context.Set<TEntity>()
                 .AsNoTracking()
-                .FirstOrDefault(exp);
+                .FirstOrDefaultAsync(exp);
+
+            return resultado!;
         }
 
-        public virtual void Crear(TEntity entidad)
+        public async virtual Task Crear(TEntity entidad)
         {
-            _context.Set<TEntity>().Add(entidad);
-            _context.SaveChanges();
+            await _context.Set<TEntity>().AddAsync(entidad);
+            await _context.SaveChangesAsync();
         }
 
-        public void Actualizar(TEntity entidad)
+        public async Task Actualizar(TEntity entidad)
         {
             _context.Set<TEntity>().Update(entidad);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         //public void EliminarProducto(int id)

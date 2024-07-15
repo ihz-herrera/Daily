@@ -9,13 +9,13 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
         public int ProductoId { get; set; }
         public string Descripcion { get; set; } = null!;
         public decimal Precio { get; set; }
-        public decimal Costo { get; set; }
+        public decimal Costo { get;  private set ; }
         public bool Status { get; set; }
 
        
 
         //crear constructor
-        public Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status)
+        internal Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status)
         {
             ProductoId = productoId;
 
@@ -29,6 +29,15 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
                 .Positive(m => "El valor debe ser mayor a cero");
 
             Status = status;
+        }
+
+        public void SetCosto(decimal costo)
+        {
+            Costo = Guard.Argument(costo, "Costo")
+                .Positive(m => "El valor debe ser mayor a cero");
+
+            if (Costo > Precio)
+                throw new ArgumentException("El costo no puede ser mayor al precio");
         }
     }
 }

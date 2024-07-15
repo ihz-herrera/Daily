@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Form1
+Partial Class MEnu
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,52 +23,52 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         btnProveedores = New Button()
-        btnCompras = New Button()
         btnProductos = New Button()
+        btnCompras = New Button()
         SuspendLayout()
         ' 
         ' btnProveedores
         ' 
-        btnProveedores.Location = New Point(12, 68)
+        btnProveedores.Location = New Point(12, 55)
         btnProveedores.Name = "btnProveedores"
-        btnProveedores.Size = New Size(108, 29)
+        btnProveedores.Size = New Size(102, 29)
         btnProveedores.TabIndex = 0
         btnProveedores.Text = "Proveedores"
         btnProveedores.UseVisualStyleBackColor = True
         ' 
-        ' btnCompras
-        ' 
-        btnCompras.Location = New Point(12, 103)
-        btnCompras.Name = "btnCompras"
-        btnCompras.Size = New Size(108, 29)
-        btnCompras.TabIndex = 1
-        btnCompras.Text = "Compras"
-        btnCompras.UseVisualStyleBackColor = True
-        ' 
         ' btnProductos
         ' 
-        btnProductos.Location = New Point(12, 138)
+        btnProductos.Location = New Point(12, 90)
         btnProductos.Name = "btnProductos"
-        btnProductos.Size = New Size(108, 29)
-        btnProductos.TabIndex = 2
+        btnProductos.Size = New Size(102, 29)
+        btnProductos.TabIndex = 1
         btnProductos.Text = "Productos"
         btnProductos.UseVisualStyleBackColor = True
         ' 
-        ' Form1
+        ' btnCompras
+        ' 
+        btnCompras.Location = New Point(12, 125)
+        btnCompras.Name = "btnCompras"
+        btnCompras.Size = New Size(102, 29)
+        btnCompras.TabIndex = 2
+        btnCompras.Text = "Compras"
+        btnCompras.UseVisualStyleBackColor = True
+        ' 
+        ' MEnu
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
-        Controls.Add(btnProductos)
         Controls.Add(btnCompras)
+        Controls.Add(btnProductos)
         Controls.Add(btnProveedores)
-        Name = "Form1"
-        Text = "Punto de Venta"
+        Name = "MEnu"
+        Text = "Form1"
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents btnProveedores As Button
-    Friend WithEvents btnCompras As Button
     Friend WithEvents btnProductos As Button
+    Friend WithEvents btnCompras As Button
 
 End Class

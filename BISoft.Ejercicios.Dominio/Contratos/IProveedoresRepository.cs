@@ -1,4 +1,5 @@
 ﻿using BISoft.Ejercicios.Infraestructura.Entidades;
+using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Infraestructura.Contratos
 {
@@ -6,6 +7,6 @@ namespace BISoft.Ejercicios.Infraestructura.Contratos
     {
        
         void EliminarProveedor(int id);
-        Proveedor ObtenerProveedorPorId(int id);
+        Task<Proveedor> ObtenerProveedorPorId(int id);
     }
 }
