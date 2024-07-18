@@ -1,22 +1,13 @@
-﻿using BISoft.Ejercicios.Aplicacion.Fabricas;
-using BISoft.Ejercicios.Infraestructura.Contextos;
+﻿using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
-using BISoft.Ejercicios.Infraestructura.Repositorios;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
     public class ProveedoresService
     {
-        private readonly ProveedoresRepository _repo;
+        private readonly IProveedoresRepository _repo;
 
-        public ProveedoresService(ProveedoresRepository repo)
+        public ProveedoresService(IProveedoresRepository repo)
         {
             _repo = repo;
         }
@@ -24,11 +15,12 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         public async Task GuardarProveedor(short id, string nombre, string direccion)
         {
-          
+
             // Consultar si el proveedor ya existe
             var proveedor = await _repo.ObtenerProveedorPorId(id);
             if (proveedor != null)
             {
+                //si existe, actualizar
                 proveedor = new Proveedor
                 {
                     Id = id,
@@ -40,6 +32,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             }
             else
             {
+                //si no existe, crear
                 proveedor = new Proveedor
                 {
                     Id = id,
@@ -49,6 +42,15 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
                 await _repo.Crear(proveedor);
             }
+
+
+
         }
+    
+        public async Task<IEnumerable<Proveedor>> ObtenerProveedores()
+        {
+            return await _repo.ObtenerTodos();
+        }
+    
     }
 }

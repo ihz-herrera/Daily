@@ -23,7 +23,7 @@ Public Class frmProveedores
         Dim tipoRepositorio As String = Environment.GetEnvironmentVariable("TIPO_REPOSITORIO")
 
         Dim repo = ProveedoresRepositoryFactory _
-            .GetProveedoresRepository(tipoRepositorio)
+            .CrearProveedoresRepository(tipoRepositorio)
 
         _proveedoresService = New ProveedoresService(repo)
 

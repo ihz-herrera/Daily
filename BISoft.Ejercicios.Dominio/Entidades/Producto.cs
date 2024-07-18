@@ -10,7 +10,7 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
         public string Descripcion { get; set; } = null!;
         public decimal Precio { get; set; }
         public decimal Costo { get;  private set ; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
 
        
 

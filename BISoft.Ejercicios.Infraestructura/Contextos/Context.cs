@@ -1,4 +1,5 @@
-﻿using BISoft.Ejercicios.Infraestructura.Entidades;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Infraestructura.Entidades;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
         public DbSet<Proveedor> Proveedores  { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Compra> Compras { get; set; }
+
+        public DbSet<Sucursal> Sucursales { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -69,6 +72,23 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                     .HasColumnName("descripcion");
 
                 entity.Property(e => e.Proveedor).HasColumnName("proveedor");
+            });
+
+            modelBuilder.Entity<Sucursal>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+                
+
+                entity.Property(e => e.Id)
+                .HasColumnName("sucursalId");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
             });
         }
 

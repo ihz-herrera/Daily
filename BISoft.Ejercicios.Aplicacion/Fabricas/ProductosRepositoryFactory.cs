@@ -11,7 +11,7 @@ namespace BISoft.Ejercicios.Aplicacion.Fabricas
 {
     public class ProductosRepositoryFactory
     {
-        public static IProductosRepository GetProductosRepository(string repoType)
+        public static IProductosRepository CrearProductosRepository(string repoType)
         {
 
             ProductosRepository repository;

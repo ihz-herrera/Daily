@@ -12,7 +12,7 @@ namespace BISoft.Ejercicios.Aplicacion.Fabricas
     public class ProveedoresRepositoryFactory
     {
 
-        public static IProveedoresRepository GetProveedoresRepository(string repoType)
+        public static IProveedoresRepository CrearProveedoresRepository(string repoType)
         {
 
             IProveedoresRepository repository ;

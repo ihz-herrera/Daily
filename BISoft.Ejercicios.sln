@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Infraestr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Aplicacion", "BISoft.Ejercicios.Aplicacion\BISoft.Ejercicios.Aplicacion.csproj", "{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Bisoft.Ejercicio.Presentacion.Windows", "Bisoft.Ejercicio.Presentacion.Windows\Bisoft.Ejercicio.Presentacion.Windows.vbproj", "{1C04346E-D397-4DA9-B07B-8DB6CFD2F815}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Dominio", "BISoft.Ejercicios.Dominio\BISoft.Ejercicios.Dominio.csproj", "{B7E797C3-120B-483E-8461-431C2F65D562}"
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "WinFormsApp1", "WinFormsApp1\WinFormsApp1.vbproj", "{86E2197E-E23A-496F-827C-E48A9892FCE3}"
@@ -27,10 +25,6 @@ Global
 		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C04346E-D397-4DA9-B07B-8DB6CFD2F815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C04346E-D397-4DA9-B07B-8DB6CFD2F815}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C04346E-D397-4DA9-B07B-8DB6CFD2F815}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C04346E-D397-4DA9-B07B-8DB6CFD2F815}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7E797C3-120B-483E-8461-431C2F65D562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7E797C3-120B-483E-8461-431C2F65D562}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7E797C3-120B-483E-8461-431C2F65D562}.Release|Any CPU.ActiveCfg = Release|Any CPU

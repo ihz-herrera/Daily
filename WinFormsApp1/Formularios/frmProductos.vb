@@ -3,8 +3,20 @@ Imports Bisoft.Ejercicios.Dominio.Builders
 Imports Bisoft.Ejercicios.Infraestructura.Contextos
 Imports Bisoft.Ejercicios.Infraestructura.Entidades
 Imports Bisoft.Ejercicios.Infraestructura.Repositorios
+Imports BISoft.Ejercicios.Aplicacion.Servicios
 
 Public Class frmProductos
+
+    Private ReadOnly _productoService As ProductosService
+
+    Public Sub New()
+        InitializeComponent()
+
+        Dim repositorio As ProductosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
+        _productoService = New ProductosService(repositorio)
+
+    End Sub
+
     Private Sub frmProductos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 
@@ -14,14 +26,6 @@ Public Class frmProductos
     Private Async Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Try
 
-            Dim repositorio As ProductosRepository = ProductosRepositoryFactory.GetProductosRepository("EF")
-
-            Dim productoConsulta As Producto = Await repositorio _
-                                .ObtenerPorExpresion(Function(p) _
-                                     p.ProductoId = txtId.Text
-                                )
-
-
             Dim producto = ProductoBuilder.Empty _
                 .WithId(txtId.Text) _
                 .WithDescripcion(txtDescripcion.Text) _
@@ -30,21 +34,7 @@ Public Class frmProductos
                 .WithStatus(chkEstatus.Checked) _
                 .Build()
 
-            If productoConsulta IsNot Nothing Then
-                Await repositorio.Actualizar(producto)
-            Else
-                Await repositorio.Crear(producto)
-            End If
-
-
-
-            'Dim productoCrear As New Producto(
-            '        txtId.Text,
-            '        txtDescripcion.Text,
-            '        txtPrecio.Text,
-            '        txtCosto.Text,
-            '        chkEstatus.Checked
-            ')
+            Await _productoService.CrearProducto(producto)
 
 
             MessageBox.Show("Producto guardado correctamente")
@@ -56,11 +46,8 @@ Public Class frmProductos
     End Sub
 
     Private Async Sub frmProductos_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        Dim repo As ProductosRepository = ProductosRepositoryFactory _
-               .GetProductosRepository("EF")
 
-        Dim productos = Await repo.ObtenerTodos()
 
-        dgvProductos.DataSource = productos
+        dgvProductos.DataSource = Await _productoService.ObtenerProductos()
     End Sub
 End Class
