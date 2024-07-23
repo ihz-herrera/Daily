@@ -1,10 +1,16 @@
-﻿Public Class MEnu
+﻿Imports System.Net.Http.Headers
+Imports BISoft.Ejercicios.Aplicacion.Servicios
+
+Public Class MEnu
     Private Sub btnProveedores_Click(sender As Object, e As EventArgs) Handles btnProveedores.Click
         Dim frm As New frmProveedores
         frm.Show()
     End Sub
 
     Private Sub btnProductos_Click(sender As Object, e As EventArgs) Handles btnProductos.Click
+        Dim emailService As New EmailService()
+        emailService.SendEmail("ivan@gmail.com", "Hola", "Hola Ivan")
+
         Dim frm As New frmProductos
         frm.Show()
     End Sub

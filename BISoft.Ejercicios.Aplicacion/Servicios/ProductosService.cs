@@ -1,11 +1,5 @@
 ﻿using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
-using BISoft.Ejercicios.Infraestructura.Repositorios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
@@ -37,7 +31,18 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 await _repo.Crear(producto);
             }
 
+            //Enviar email de notificación
+            var emailService = new EmailService();
+            await emailService.SendEmail("","Nuevo producto creado", $"Se ha creado el producto {producto.ProductoId}");
             
+            //Enviar mensaje de whatsapp
+            var whatsappService = new WhatsappService();
+            await whatsappService.SendMessage("1234567890", $"Se ha creado el producto {producto.ProductoId}");
+
+            //Enviar notificación por http
+            var httpService = new HttpService();
+            await httpService.SendRequest("http://miservicio.com/notificar");
+
             //retornar el producto creado o actualizado
             return producto;
         }
