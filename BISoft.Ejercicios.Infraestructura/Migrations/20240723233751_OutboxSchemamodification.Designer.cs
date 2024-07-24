@@ -4,6 +4,7 @@ using BISoft.Ejercicios.Infraestructura.Contextos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BISoft.Ejercicios.Infraestructura.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240723233751_OutboxSchemamodification")]
+    partial class OutboxSchemamodification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,17 +35,10 @@ namespace BISoft.Ejercicios.Infraestructura.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("createdAt");
 
-                    b.Property<string>("EventType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FailureReason")
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)")
                         .HasColumnName("failureReason");
-
-                    b.Property<bool>("IsProcessed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("MessageType")
                         .IsRequired()

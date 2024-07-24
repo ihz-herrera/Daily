@@ -16,6 +16,7 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
         public DbSet<Compra> Compras { get; set; }
 
         public DbSet<Sucursal> Sucursales { get; set; }
+        public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,7 +39,8 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
             {
                 entity.HasKey(e=>  e.ProductoId);
 
-                entity.ToTable("genProductosCat");
+                entity.ToTable("genProductosCat","dbo");
+                
 
                 entity.Property(e => e.ProductoId)
                 .HasColumnName("codigoProducto");
@@ -89,6 +91,38 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+            });
+
+
+            modelBuilder.Entity<OutboxMessage>(entity =>
+            {
+                entity.ToTable("OutboxMessages","outbox");
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .HasColumnName("id");
+
+                entity.Property(e => e.MessageType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("messageType");
+
+                entity.Property(e => e.Payload)
+                    .IsUnicode(false)
+                    .HasColumnName("payload");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("createdAt");
+
+                entity.Property(e => e.ProcessedAt)
+                    .HasColumnName("processedAt");
+
+                entity.Property(e => e.RetryCount)
+                    .HasColumnName("retryCount");
+
+                entity.Property(e => e.FailureReason)
+                    .IsUnicode(false)
+                    .HasColumnName("failureReason");
             });
         }
 

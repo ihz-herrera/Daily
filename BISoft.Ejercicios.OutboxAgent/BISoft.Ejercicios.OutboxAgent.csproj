@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-BISoft.Ejercicios.OutboxAgent-b146cf05-7848-4dcf-a54c-065d2b0489fa</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BISoft.Ejercicios.Aplicacion\BISoft.Ejercicios.Aplicacion.csproj" />
+    <ProjectReference Include="..\BISoft.Ejercicios.Infraestructura\BISoft.Ejercicios.Infraestructura.csproj" />
+  </ItemGroup>
+</Project>

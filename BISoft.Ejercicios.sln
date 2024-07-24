@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Dominio",
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "WinFormsApp1", "WinFormsApp1\WinFormsApp1.vbproj", "{86E2197E-E23A-496F-827C-E48A9892FCE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BISoft.Ejercicios.OutboxAgent", "BISoft.Ejercicios.OutboxAgent\BISoft.Ejercicios.OutboxAgent.csproj", "{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{86E2197E-E23A-496F-827C-E48A9892FCE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86E2197E-E23A-496F-827C-E48A9892FCE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86E2197E-E23A-496F-827C-E48A9892FCE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,14 +1,20 @@
-﻿using BISoft.Ejercicios.Infraestructura.Contratos;
+﻿using BISoft.Ejercicios.Dominio.Contratos;
+using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Infraestructura.Contextos;
+using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
+using BISoft.Ejercicios.Infraestructura.Repositorios;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
     public class ProductosService
     {
         private readonly IProductosRepository _repo;
+        private readonly IOutboxRepository _outboxRepository;
 
         public ProductosService(IProductosRepository repo)
         {
+            _outboxRepository = new OutboxRepository(new Context());
             _repo = repo;
         }
 
@@ -31,17 +37,39 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 await _repo.Crear(producto);
             }
 
-            //Enviar email de notificación
-            var emailService = new EmailService();
-            await emailService.SendEmail("","Nuevo producto creado", $"Se ha creado el producto {producto.ProductoId}");
-            
-            //Enviar mensaje de whatsapp
-            var whatsappService = new WhatsappService();
-            await whatsappService.SendMessage("1234567890", $"Se ha creado el producto {producto.ProductoId}");
 
-            //Enviar notificación por http
-            var httpService = new HttpService();
-            await httpService.SendRequest("http://miservicio.com/notificar");
+            //Crear mensaje en outbox
+            var outboxMessage = new OutboxMessage
+            {
+                MessageType = "Email",
+                EventType = "ProductoCreado",
+                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                CreatedAt = DateTime.Now
+            };
+
+            await _outboxRepository.Crear(outboxMessage);
+
+            //Enviar por WhatsApp
+            var whatsAppOutboxMessage = new OutboxMessage
+            {
+                MessageType = "WhatsApp",
+                EventType = "ProductoCreado",
+                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                CreatedAt = DateTime.Now
+            };
+
+            await _outboxRepository.Crear(whatsAppOutboxMessage);
+
+            //Enviar por Http
+            var httpOutboxMessage = new OutboxMessage
+            {
+                MessageType = "Http",
+                EventType = "ProductoCreado",
+                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                CreatedAt = DateTime.Now
+            };
+
+            await _outboxRepository.Crear(httpOutboxMessage);
 
             //retornar el producto creado o actualizado
             return producto;
