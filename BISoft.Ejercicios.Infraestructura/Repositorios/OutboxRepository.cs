@@ -15,5 +15,11 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         {
 
         }
+
+        public async Task Crear(IEnumerable<OutboxMessage> outboxMessages)
+        {
+            await _context.AddRangeAsync(outboxMessages);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -16,9 +16,10 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
 
         }
 
+        [Obsolete ("Función descontinuada, usar GetCollectionByExp en su lugar")]
         public async virtual Task<List<TEntity>> ObtenerTodos()
         {
-            await Task.Delay(8000);
+            //await Task.Delay(8000);
 
             return await _context.Set<TEntity>()
                 .AsNoTracking().ToListAsync();
@@ -45,6 +46,16 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         {
             _context.Set<TEntity>().Update(entidad);
             await _context.SaveChangesAsync();
+        }
+
+        public IQueryable<TEntity> GetCollectionByExp(Expression<Func<TEntity, bool>> expresion)
+        {
+            return _context.Set<TEntity>().Where(expresion);
+        }
+
+        public IQueryable<TEntity> GetCollection()
+        {
+            return _context.Set<TEntity>();
         }
 
         //public void EliminarProducto(int id)

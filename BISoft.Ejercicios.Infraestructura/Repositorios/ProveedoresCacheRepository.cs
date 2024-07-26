@@ -118,5 +118,15 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         {
             return await _proveedoresRepository.ObtenerPorExpresion(expresion);
         }
+
+        public IQueryable<Proveedor> GetCollectionByExp(Expression<Func<Proveedor, bool>> expresion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Proveedor> GetCollection()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

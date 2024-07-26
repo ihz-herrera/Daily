@@ -35,6 +35,7 @@ Partial Class frmProductos
         dgvProductos = New DataGridView()
         txtCosto = New TextBox()
         Label3 = New Label()
+        btnSiguiente = New Button()
         CType(ProveedorBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvProductos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -133,11 +134,21 @@ Partial Class frmProductos
         Label3.TabIndex = 6
         Label3.Text = "Costo"
         ' 
+        ' btnSiguiente
+        ' 
+        btnSiguiente.Location = New Point(217, 326)
+        btnSiguiente.Name = "btnSiguiente"
+        btnSiguiente.Size = New Size(90, 40)
+        btnSiguiente.TabIndex = 11
+        btnSiguiente.Text = ">>"
+        btnSiguiente.UseVisualStyleBackColor = True
+        ' 
         ' frmProductos
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(945, 378)
+        Controls.Add(btnSiguiente)
         Controls.Add(txtCosto)
         Controls.Add(Label3)
         Controls.Add(dgvProductos)
@@ -169,4 +180,5 @@ Partial Class frmProductos
     Friend WithEvents dgvProductos As DataGridView
     Friend WithEvents txtCosto As TextBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents btnSiguiente As Button
 End Class

@@ -1,6 +1,9 @@
+using BISoft.Ejercicios.Aplicacion.Notificaciones;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BISoft.Ejercicios.OutboxAgent
 {
@@ -19,20 +22,27 @@ namespace BISoft.Ejercicios.OutboxAgent
             {
                 var outboxRepository = new OutboxRepository(new Context());
 
-                var messages = await outboxRepository.ObtenerTodos();
-                var mensajesSinProcesar = messages
-                        .Where(x => x.IsProcessed == false)
-                        .ToList();    
+                var exp = outboxRepository
+                    .GetCollectionByExp(x => x.IsProcessed == false);
 
-                foreach (var message in mensajesSinProcesar)
+                var messages = await exp
+                     .ToListAsync();
+
+
+                foreach (var message in messages)
                 {
                     //Enviar mensaje
                     switch (message.MessageType)
                     {
                         case "Email":
                             //Enviar por email
-                            //var emailService = new EmailService();
-                            //emailService.SendEmail(message.Payload);
+                            var emailService = new EmailService();
+
+                            var emailMessage = JsonConvert.DeserializeObject<EmailMessage>(message.Payload);
+
+                            await emailService.SendEmail(emailMessage.To
+                                ,emailMessage.Subject
+                                ,emailMessage.Data);
                           
 
                             break;
