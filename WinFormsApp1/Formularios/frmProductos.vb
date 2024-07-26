@@ -4,10 +4,12 @@ Imports Bisoft.Ejercicios.Infraestructura.Contextos
 Imports Bisoft.Ejercicios.Infraestructura.Entidades
 Imports Bisoft.Ejercicios.Infraestructura.Repositorios
 Imports BISoft.Ejercicios.Aplicacion.Servicios
+Imports BISoft.Ejercicios.Aplicacion.Dtos.Parametros
 
 Public Class frmProductos
 
     Private ReadOnly _productoService As ProductosService
+    Private _page As Int32 = 1
 
     Public Sub New()
         InitializeComponent()
@@ -47,7 +49,28 @@ Public Class frmProductos
 
     Private Async Sub frmProductos_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
+        CargarProductos(1)
 
-        dgvProductos.DataSource = Await _productoService.ObtenerProductos()
     End Sub
+
+    Private Sub btnSiguiente_Click(sender As Object, e As EventArgs) Handles btnSiguiente.Click
+        _page += 1
+        CargarProductos(_page)
+    End Sub
+
+    Private Async Sub CargarProductos(page As Int32)
+
+        Dim paginationParameters = New PaginationParameters() With {
+            .PageNumber = page,
+            .PageSize = 10
+        }
+
+        Dim result = Await _productoService.ObtenerProductoPaginados(
+            paginationParameters
+        )
+
+        dgvProductos.DataSource = result
+    End Sub
+
+
 End Class

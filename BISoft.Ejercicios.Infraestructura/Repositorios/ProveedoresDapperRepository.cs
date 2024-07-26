@@ -64,5 +64,15 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<Proveedor> GetCollectionByExp(Expression<Func<Proveedor, bool>> expresion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Proveedor> GetCollection()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

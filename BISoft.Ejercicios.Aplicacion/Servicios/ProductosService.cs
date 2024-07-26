@@ -1,9 +1,14 @@
-﻿using BISoft.Ejercicios.Dominio.Contratos;
+﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+using BISoft.Ejercicios.Aplicacion.Notificaciones;
+using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
+using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
@@ -38,38 +43,24 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             }
 
 
-            //Crear mensaje en outbox
-            var outboxMessage = new OutboxMessage
-            {
-                MessageType = "Email",
-                EventType = "ProductoCreado",
-                Payload = $"Se ha creado el producto {producto.ProductoId}",
-                CreatedAt = DateTime.Now
-            };
+            var messages = NotificationBuilder
+                .Create()
+                .AddEventType("ProductoCreado")
+                .AddEmail("ivanh@techsoft.com.mx"
+                    , "Producto Creado"
+                    , $"Se ha creado el producto {producto.ProductoId}")
+                .AddWhatsapp(w =>
+                    {
+                        w.PhoneNumber = "1234567890";
+                        w.Data = $"Se ha creado el producto {producto.ProductoId}";
+                    }
+                )
+                .AddHttpMessage(h => h
+                    .AddUrl("http://localhost:5000/api/Producto")
+                    .AddData($"Se ha creado el producto {producto.ProductoId}"))
+                .Build();
 
-            await _outboxRepository.Crear(outboxMessage);
-
-            //Enviar por WhatsApp
-            var whatsAppOutboxMessage = new OutboxMessage
-            {
-                MessageType = "WhatsApp",
-                EventType = "ProductoCreado",
-                Payload = $"Se ha creado el producto {producto.ProductoId}",
-                CreatedAt = DateTime.Now
-            };
-
-            await _outboxRepository.Crear(whatsAppOutboxMessage);
-
-            //Enviar por Http
-            var httpOutboxMessage = new OutboxMessage
-            {
-                MessageType = "Http",
-                EventType = "ProductoCreado",
-                Payload = $"Se ha creado el producto {producto.ProductoId}",
-                CreatedAt = DateTime.Now
-            };
-
-            await _outboxRepository.Crear(httpOutboxMessage);
+            await _outboxRepository.Crear(messages);
 
             //retornar el producto creado o actualizado
             return producto;
@@ -79,6 +70,16 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         {
             return await _repo.ObtenerTodos();
 
+        }
+
+        public async Task<List<Producto>> ObtenerProductoPaginados(PaginationParameters parameters)
+        {
+            return await _repo.GetCollection()
+                .AsNoTracking()
+                .OrderBy(p => p.ProductoId)
+                .Skip((parameters.PageNumber-1)*parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync();
         }
     }
 }

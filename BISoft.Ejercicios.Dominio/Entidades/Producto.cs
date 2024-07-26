@@ -20,7 +20,7 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
             ProductoId = productoId;
 
             Descripcion = Guard.Argument(descripcion, "Descripción")
-                .NotEmpty().MaxLength(50).MinLength(8);
+                .NotEmpty().MaxLength(50);
 
             Precio = Guard.Argument(precio, nameof(precio))
                 .Positive(m=> "El valor debe ser mayor a cero");

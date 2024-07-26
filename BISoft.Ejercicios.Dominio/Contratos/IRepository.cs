@@ -1,6 +1,7 @@
 ﻿using BISoft.Ejercicios.Infraestructura.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -14,5 +15,9 @@ namespace BISoft.Ejercicios.Infraestructura.Contratos
 
 
         Task<T> ObtenerPorExpresion(Expression<Func<T, bool>> expresion);
+
+        IQueryable<T> GetCollectionByExp (Expression<Func<T, bool>> expresion);
+
+        IQueryable<T> GetCollection ();
     }
 }
