@@ -35,7 +35,11 @@ Partial Class frmProductos
         dgvProductos = New DataGridView()
         txtCosto = New TextBox()
         Label3 = New Label()
-        btnSiguiente = New Button()
+        btnNext = New Button()
+        btnPrevius = New Button()
+        btnLoadMore = New Button()
+        lblPagination = New Label()
+        txtBuscador = New TextBox()
         CType(ProveedorBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvProductos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -110,12 +114,11 @@ Partial Class frmProductos
         ' dgvProductos
         ' 
         dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvProductos.Dock = DockStyle.Right
-        dgvProductos.Location = New Point(313, 0)
+        dgvProductos.Location = New Point(313, 66)
         dgvProductos.Name = "dgvProductos"
         dgvProductos.RowHeadersWidth = 51
         dgvProductos.RowTemplate.Height = 29
-        dgvProductos.Size = New Size(632, 378)
+        dgvProductos.Size = New Size(632, 252)
         dgvProductos.TabIndex = 10
         ' 
         ' txtCosto
@@ -134,21 +137,59 @@ Partial Class frmProductos
         Label3.TabIndex = 6
         Label3.Text = "Costo"
         ' 
-        ' btnSiguiente
+        ' btnNext
         ' 
-        btnSiguiente.Location = New Point(217, 326)
-        btnSiguiente.Name = "btnSiguiente"
-        btnSiguiente.Size = New Size(90, 40)
-        btnSiguiente.TabIndex = 11
-        btnSiguiente.Text = ">>"
-        btnSiguiente.UseVisualStyleBackColor = True
+        btnNext.Location = New Point(843, 324)
+        btnNext.Name = "btnNext"
+        btnNext.Size = New Size(90, 40)
+        btnNext.TabIndex = 11
+        btnNext.Text = ">>"
+        btnNext.UseVisualStyleBackColor = True
+        ' 
+        ' btnPrevius
+        ' 
+        btnPrevius.Location = New Point(634, 326)
+        btnPrevius.Name = "btnPrevius"
+        btnPrevius.Size = New Size(90, 40)
+        btnPrevius.TabIndex = 12
+        btnPrevius.Text = "<<"
+        btnPrevius.UseVisualStyleBackColor = True
+        ' 
+        ' btnLoadMore
+        ' 
+        btnLoadMore.Location = New Point(313, 326)
+        btnLoadMore.Name = "btnLoadMore"
+        btnLoadMore.Size = New Size(90, 40)
+        btnLoadMore.TabIndex = 13
+        btnLoadMore.Text = "Load"
+        btnLoadMore.UseVisualStyleBackColor = True
+        ' 
+        ' lblPagination
+        ' 
+        lblPagination.AutoSize = True
+        lblPagination.Location = New Point(741, 334)
+        lblPagination.Name = "lblPagination"
+        lblPagination.Size = New Size(96, 20)
+        lblPagination.TabIndex = 14
+        lblPagination.Text = "lblPagination"
+        ' 
+        ' txtBuscador
+        ' 
+        txtBuscador.Location = New Point(313, 33)
+        txtBuscador.Name = "txtBuscador"
+        txtBuscador.Size = New Size(632, 27)
+        txtBuscador.TabIndex = 15
         ' 
         ' frmProductos
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(945, 378)
-        Controls.Add(btnSiguiente)
+        Controls.Add(txtBuscador)
+        Controls.Add(lblPagination)
+        Controls.Add(btnLoadMore)
+        Controls.Add(btnPrevius)
+        Controls.Add(btnNext)
         Controls.Add(txtCosto)
         Controls.Add(Label3)
         Controls.Add(dgvProductos)
@@ -180,5 +221,9 @@ Partial Class frmProductos
     Friend WithEvents dgvProductos As DataGridView
     Friend WithEvents txtCosto As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents btnSiguiente As Button
+    Friend WithEvents btnNext As Button
+    Friend WithEvents btnPrevius As Button
+    Friend WithEvents btnLoadMore As Button
+    Friend WithEvents lblPagination As Label
+    Friend WithEvents txtBuscador As TextBox
 End Class
