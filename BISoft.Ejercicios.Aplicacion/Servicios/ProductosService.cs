@@ -1,8 +1,4 @@
-﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
-using BISoft.Ejercicios.Aplicacion.Helpers;
-using BISoft.Ejercicios.Aplicacion.Notificaciones;
-using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
-using BISoft.Ejercicios.Dominio.Contratos;
+﻿using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Contratos;
@@ -64,6 +60,28 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             await _outboxRepository.Crear(messages);
 
+            //Enviar por WhatsApp
+            var whatsAppOutboxMessage = new OutboxMessage
+            {
+                MessageType = "WhatsApp",
+                EventType = "ProductoCreado",
+                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                CreatedAt = DateTime.Now
+            };
+
+            await _outboxRepository.Crear(whatsAppOutboxMessage);
+
+            //Enviar por Http
+            var httpOutboxMessage = new OutboxMessage
+            {
+                MessageType = "Http",
+                EventType = "ProductoCreado",
+                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                CreatedAt = DateTime.Now
+            };
+
+            await _outboxRepository.Crear(httpOutboxMessage);
+
             //retornar el producto creado o actualizado
             return producto;
         }
@@ -72,23 +90,6 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         {
             return await _repo.ObtenerTodos();
 
-        }
-
-        public async Task<PagerList<Producto>> ObtenerProductoPaginados(PaginationParameters parameters,Expression<Func<Producto,bool>> where = null )
-        {
-            var source = _repo.GetCollection();
-                 
-            if (where != null)
-            {
-                source = source.Where(where);
-            }
-
-            source = source.AsNoTracking()
-                 .OrderBy(p => p.ProductoId);
-
-            return PagerList<Producto>
-                .Create(source, parameters.PageNumber, parameters.PageSize);
-                
         }
     }
 }
