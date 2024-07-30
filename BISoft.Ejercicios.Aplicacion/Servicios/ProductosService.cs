@@ -1,4 +1,5 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+using BISoft.Ejercicios.Aplicacion.Helpers;
 using BISoft.Ejercicios.Aplicacion.Notificaciones;
 using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
 using BISoft.Ejercicios.Dominio.Contratos;
@@ -9,6 +10,7 @@ using BISoft.Ejercicios.Infraestructura.Entidades;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
@@ -72,14 +74,21 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         }
 
-        public async Task<List<Producto>> ObtenerProductoPaginados(PaginationParameters parameters)
+        public async Task<PagerList<Producto>> ObtenerProductoPaginados(PaginationParameters parameters,Expression<Func<Producto,bool>> where = null )
         {
-            return await _repo.GetCollection()
-                .AsNoTracking()
-                .OrderBy(p => p.ProductoId)
-                .Skip((parameters.PageNumber-1)*parameters.PageSize)
-                .Take(parameters.PageSize)
-                .ToListAsync();
+            var source = _repo.GetCollection();
+                 
+            if (where != null)
+            {
+                source = source.Where(where);
+            }
+
+            source = source.AsNoTracking()
+                 .OrderBy(p => p.ProductoId);
+
+            return PagerList<Producto>
+                .Create(source, parameters.PageNumber, parameters.PageSize);
+                
         }
     }
 }
