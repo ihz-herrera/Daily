@@ -13,6 +13,8 @@ namespace BISoft.Ejercicios.Dominio.Builders
         private decimal precio;
         private decimal costo;
         private bool status;
+        private int categoriaId;
+        private int fabricanteId;
 
         public static ProductoBuilder Empty => new ProductoBuilder();
 
@@ -46,6 +48,18 @@ namespace BISoft.Ejercicios.Dominio.Builders
             return this;
         }
 
+        public ProductoBuilder WithCategoriaId(int categoriaId)
+        {
+            this.categoriaId = categoriaId;
+            return this;
+        }
+
+
+        public ProductoBuilder WithFabricante(int fabricanteId)
+        {
+            this.fabricanteId = fabricanteId; 
+            return this;
+        }
 
         public Producto Build()
         {

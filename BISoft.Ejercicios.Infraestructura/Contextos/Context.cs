@@ -124,6 +124,16 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                     .IsUnicode(false)
                     .HasColumnName("failureReason");
             });
+
+
+            modelBuilder.Entity<Categoria>(entity =>
+            {
+                entity.HasKey(e => e.CategoriaId);
+
+                entity.Property(e => e.CategoriaId)
+                .UseIdentityColumn();
+            }
+            );
         }
 
     }

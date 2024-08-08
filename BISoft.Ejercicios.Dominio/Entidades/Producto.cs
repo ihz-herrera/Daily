@@ -1,4 +1,5 @@
-﻿using Dawn;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
+using Dawn;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,10 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
         public decimal Precio { get; set; }
         public decimal Costo { get;  private set ; }
         public bool Status { get; set; } = true;
+
+
+        public int FabricanteId { get; set; }
+        public int CategoriaId { get; set; }
 
        
 
