@@ -1,11 +1,12 @@
-﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+﻿using BISoft.Ejercicios.Aplicacion.Dtos;
+using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Helpers;
 using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
 using BISoft.Ejercicios.Dominio.Builders;
 using BISoft.Ejercicios.Dominio.Contratos;
+using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Contratos;
-using BISoft.Ejercicios.Infraestructura.Entidades;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -71,9 +72,10 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             return producto;
         }
 
-        public async Task<IEnumerable<Producto>> ObtenerProductos()
+        public async Task<IEnumerable<ProductoDto>> ObtenerProductos()
         {
-            var products = _repo.GetCollection();
+            var products = _repo.GetCollection()
+                .Include(p=> p.CodigosRelacionados);
 
             var categorias = _repoCategorias.GetCollection();
 
@@ -91,15 +93,22 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             var fabricantes = _repoFabricantes.GetCollection();
 
-            var result2 = productos.Join(fabricantes,
+            var result2 = 
+                productos.Join(fabricantes,
                 p => p.FabricanteId,
                 f => f.FabricanteId,
                 (p, f) =>
-                new { p, f });
+                new ProductoDto
+                {
+                    Producto = p,
+                    Fabricante = f,
+                    
+                });
 
 
-
-            return await _repo.ObtenerTodos();
+            
+               
+            return await result2.ToListAsync();
 
         }
 

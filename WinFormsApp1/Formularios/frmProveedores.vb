@@ -13,6 +13,8 @@ Public Class frmProveedores
     Private isBusy As Boolean = False
     Private ReadOnly _proveedoresService As ProveedoresService
 
+    Public Property Tema As String
+
     ''Crear contructor  
     Public Sub New()
         InitializeComponent()

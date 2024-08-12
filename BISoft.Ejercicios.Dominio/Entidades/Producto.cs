@@ -1,9 +1,8 @@
-﻿using BISoft.Ejercicios.Dominio.Entidades;
-using Dawn;
+﻿using Dawn;
 using System;
 using System.Collections.Generic;
 
-namespace BISoft.Ejercicios.Infraestructura.Entidades
+namespace BISoft.Ejercicios.Dominio.Entidades
 {
     public partial class Producto:Entity
     {
@@ -18,6 +17,10 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
         public int CategoriaId { get; set; }
 
        
+        //Propiedades de navegacion
+        public virtual List<CodigoRelacionado> CodigosRelacionados { get; set; } 
+            = new List<CodigoRelacionado>();
+
 
         //crear constructor
         internal Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status)

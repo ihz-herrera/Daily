@@ -1,4 +1,5 @@
-﻿using BISoft.Ejercicios.Infraestructura.Contextos;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Entidades;
 using Microsoft.EntityFrameworkCore;

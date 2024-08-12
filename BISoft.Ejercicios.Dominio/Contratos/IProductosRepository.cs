@@ -1,4 +1,5 @@
-﻿using BISoft.Ejercicios.Infraestructura.Entidades;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Infraestructura.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;

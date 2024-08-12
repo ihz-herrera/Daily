@@ -9,7 +9,7 @@ Public Class frmCompras
     Private ReadOnly _proveedoresService As ProveedoresService
 
 
-    Public Sub New()
+    Public Sub New(productoService As ProductosService)
         InitializeComponent()
 
 
@@ -19,7 +19,7 @@ Public Class frmCompras
         Dim proveedoresRepository = ProveedoresRepositoryFactory.CrearProveedoresRepository("EF")
 
 
-        _productosService = New ProductosService(productosRepository)
+        _productosService = productoService 'New ProductosService(productosRepository)
         _sucursalesService = New SucursalesService(sucursalesRepository)
         _proveedoresService = New ProveedoresService(proveedoresRepository)
 

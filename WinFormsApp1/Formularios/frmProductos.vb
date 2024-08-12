@@ -3,6 +3,7 @@ Imports BISoft.Ejercicios.Aplicacion.Fabricas
 Imports BISoft.Ejercicios.Aplicacion.Helpers
 Imports BISoft.Ejercicios.Aplicacion.Servicios
 Imports BISoft.Ejercicios.Dominio.Builders
+Imports BISoft.Ejercicios.Dominio.Entidades
 Imports BISoft.Ejercicios.Infraestructura.Entidades
 Imports BISoft.Ejercicios.Infraestructura.Repositorios
 
@@ -11,11 +12,11 @@ Public Class frmProductos
     Private ReadOnly _productoService As ProductosService
     Private _pagerProductList As PagerList(Of Producto)
 
-    Public Sub New()
+    Public Sub New(productoService As ProductosService)
         InitializeComponent()
 
         Dim repositorio As ProductosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
-        _productoService = New ProductosService(repositorio)
+        _productoService = productoService ' New ProductosService(repositorio)
 
     End Sub
 

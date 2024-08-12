@@ -18,6 +18,11 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
         public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Fabricante> Fabricantes { get; set; }
+
+        public DbSet<CodigoRelacionado> CodigosRelacionados { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.\\MSSQLServer01;Database=DailyBD;Trusted_Connection=True;");
@@ -59,6 +64,12 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
                 entity.Property(e => e.Status)
                 .HasColumnName("status");
+
+                //Ignorar la propiedad categoria Id
+                entity.Ignore(e => e.CategoriaId);
+
+                //Ignorar la propiedad fabricante Id
+                entity.Ignore(e => e.FabricanteId);
             });
 
 
@@ -132,6 +143,30 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
                 entity.Property(e => e.CategoriaId)
                 .UseIdentityColumn();
+            }
+            );
+
+            modelBuilder.Entity<Fabricante>(entity =>
+            {
+                entity.HasKey(e => e.FabricanteId);
+
+                entity.Property(e => e.FabricanteId)
+                .UseIdentityColumn();
+            }
+            );
+
+            modelBuilder.Entity<CodigoRelacionado>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn()
+                ;
+
+                entity.HasOne(d=> d.Producto)
+                    .WithMany(p => p.CodigosRelacionados)
+                    .HasForeignKey(d => d.ProductoId)
+                    .HasConstraintName("FK_CodigoRelacionado_Producto");
             }
             );
         }
