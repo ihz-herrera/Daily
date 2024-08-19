@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BISoft.Ejercicios.Infraestructura.Entidades
+namespace BISoft.Ejercicios.Dominio.Entidades
 {
     public partial class Compra
     {

@@ -27,6 +27,8 @@ Public Class MEnu
         contenedor.Register(Of ICategoriasRepository, CategoriasRepository)()
         contenedor.Register(Of IFabricantesRepository, FabricantesRepository)()
 
+        contenedor.Register(Of OutboxRepository)()
+
         contenedor.Register(Of Context)(Lifestyle.Singleton)
 
         contenedor.Verify()

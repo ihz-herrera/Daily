@@ -55,11 +55,13 @@ namespace BISoft.Ejercicios.Dominio.Builders
         }
 
 
-        public ProductoBuilder WithFabricante(int fabricanteId)
+        public ProductoBuilder WithFabricanteId(int fabricanteId)
         {
             this.fabricanteId = fabricanteId; 
             return this;
         }
+
+
 
         public Producto Build()
         {

@@ -1,6 +1,6 @@
-﻿using BISoft.Ejercicios.Infraestructura.Contextos;
-using BISoft.Ejercicios.Infraestructura.Contratos;
-using BISoft.Ejercicios.Infraestructura.Entidades;
+﻿using BISoft.Ejercicios.Dominio.Contratos;
+using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Infraestructura.Contextos;
 using Dapper;
 using System.Linq.Expressions;
 

@@ -6,7 +6,6 @@ using BISoft.Ejercicios.Dominio.Builders;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Infraestructura.Contextos;
-using BISoft.Ejercicios.Infraestructura.Contratos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -21,9 +20,9 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         private readonly IOutboxRepository _outboxRepository;
 
         public ProductosService(IProductosRepository repo,ICategoriasRepository repoCategorias,
-            IFabricantesRepository fabricantesRepository)
+            IFabricantesRepository fabricantesRepository, OutboxRepository outboxRepository)
         {
-            _outboxRepository = new OutboxRepository(new Context());
+            _outboxRepository = outboxRepository; // new OutboxRepository(new Context());
             _repo = repo;
             _repoCategorias = repoCategorias;
             _repoFabricantes = fabricantesRepository;
@@ -81,34 +80,33 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             var productos = from p in products
                             join c in categorias on p.CategoriaId equals c.CategoriaId
-                            select new ProductoBuilder()
-                                    .WithId(p.ProductoId)
-                                    .WithDescripcion(p.Descripcion)
-                                    .WithPrecio(p.Precio)
-                                    .WithCosto(p.Costo)
-                                    .WithStatus(p.Status)
-                                    .WithCategoriaId(p.CategoriaId)
-                                    .Build();
+                            join f in _repoFabricantes.GetCollection() on p.FabricanteId equals f.FabricanteId
+                            select new ProductoDto(
+                                p.ProductoId,
+                                p.Descripcion,
+                                p.Precio,
+                                p.Costo,
+                                p.Status,
+                                c.Nombre,
+                                f.Nombre
+                                )
             ;
 
-            var fabricantes = _repoFabricantes.GetCollection();
+            //var fabricantes = _repoFabricantes.GetCollection();
 
-            var result2 = 
-                productos.Join(fabricantes,
-                p => p.FabricanteId,
-                f => f.FabricanteId,
-                (p, f) =>
-                new ProductoDto
-                {
-                    Producto = p,
-                    Fabricante = f,
+            //var result2 = 
+            //    productos.Join(fabricantes,
+            //    p => p.FabricanteId,
+            //    f => f.FabricanteId,
+            //    (p, f) =>
+            //    new ProductoDto
+            //    {
+            //        Producto = p,
+            //        Fabricante = f,
                     
-                });
-
-
-            
+            //    });
                
-            return await result2.ToListAsync();
+            return await productos.ToListAsync();
 
         }
 

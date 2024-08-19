@@ -1,9 +1,4 @@
-﻿using BISoft.Ejercicios.Infraestructura.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BISoft.Ejercicios.Dominio.Entidades
+﻿namespace BISoft.Ejercicios.Dominio.Entidades
 {
     public class Fabricante :Entity
     {

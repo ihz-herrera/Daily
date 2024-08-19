@@ -1,7 +1,7 @@
-﻿using BISoft.Ejercicios.Infraestructura.Entidades;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
 using System.Threading.Tasks;
 
-namespace BISoft.Ejercicios.Infraestructura.Contratos
+namespace BISoft.Ejercicios.Dominio.Contratos
 {
     public interface IProveedoresRepository : IRepository<Proveedor>
     {

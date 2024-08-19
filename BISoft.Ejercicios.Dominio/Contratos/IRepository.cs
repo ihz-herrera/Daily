@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace BISoft.Ejercicios.Infraestructura.Contratos
+namespace BISoft.Ejercicios.Dominio.Contratos
 {
     public interface IRepository <T> where T : Entity
     {

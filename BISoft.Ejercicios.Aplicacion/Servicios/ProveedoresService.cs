@@ -1,5 +1,5 @@
-﻿using BISoft.Ejercicios.Infraestructura.Contratos;
-using BISoft.Ejercicios.Infraestructura.Entidades;
+﻿using BISoft.Ejercicios.Dominio.Contratos;
+using BISoft.Ejercicios.Dominio.Entidades;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {

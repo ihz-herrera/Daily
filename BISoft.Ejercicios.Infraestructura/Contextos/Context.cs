@@ -1,11 +1,5 @@
 ﻿using BISoft.Ejercicios.Dominio.Entidades;
-using BISoft.Ejercicios.Infraestructura.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Infraestructura.Contextos
 {
@@ -65,11 +59,11 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                 entity.Property(e => e.Status)
                 .HasColumnName("status");
 
-                //Ignorar la propiedad categoria Id
-                entity.Ignore(e => e.CategoriaId);
+                ////Ignorar la propiedad categoria Id
+                //entity.Ignore(e => e.CategoriaId);
 
-                //Ignorar la propiedad fabricante Id
-                entity.Ignore(e => e.FabricanteId);
+                ////Ignorar la propiedad fabricante Id
+                //entity.Ignore(e => e.FabricanteId);
             });
 
 
