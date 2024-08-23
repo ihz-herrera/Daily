@@ -1,8 +1,10 @@
 ﻿Imports BISoft.Ejercicios.Aplicacion.Fabricas
 Imports BISoft.Ejercicios.Aplicacion.Servicios
+Imports BISoft.Ejercicios.Dominio.Entidades
+Imports BISoft.Ejercicios.Dominio.Observador
 
 Public Class frmCompras
-
+    Implements ISubscriber(Of Producto)
 
     Private ReadOnly _productosService As ProductosService
     Private ReadOnly _sucursalesService As SucursalesService
@@ -24,6 +26,8 @@ Public Class frmCompras
         _proveedoresService = New ProveedoresService(proveedoresRepository)
 
     End Sub
+
+
 
     Private Sub frmCompras_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -53,4 +57,11 @@ Public Class frmCompras
         MsgBox("Datos cargados correctamente")
 
     End Sub
+
+    Public Function Update(element As Producto) As Task Implements ISubscriber(Of Producto).Update
+        ''Actualizar de lista de productos
+        ''Mensaje de actualizacion
+        Me.Text += "Producto actualizado"
+        Return Task.CompletedTask
+    End Function
 End Class

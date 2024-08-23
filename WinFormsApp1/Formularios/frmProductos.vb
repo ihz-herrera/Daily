@@ -4,23 +4,29 @@ Imports BISoft.Ejercicios.Aplicacion.Helpers
 Imports BISoft.Ejercicios.Aplicacion.Servicios
 Imports BISoft.Ejercicios.Dominio.Builders
 Imports BISoft.Ejercicios.Dominio.Entidades
-Imports BISoft.Ejercicios.Infraestructura.Entidades
+Imports BISoft.Ejercicios.Dominio.Observador
 Imports BISoft.Ejercicios.Infraestructura.Repositorios
 
+
+''Todo: Bloquear tareas asincronas en los eventos
+
 Public Class frmProductos
+    'Implements IPublisher(Of Producto)
+
+    'Private ListaObservadores As List(Of ISubscriber(Of Producto)) = New List(Of ISubscriber(Of Producto))
 
     Private ReadOnly _productoService As ProductosService
     Private _pagerProductList As PagerList(Of Producto)
+    Private _notificationHandler As IPublisher(Of Producto)
 
-    Public Sub New(productoService As ProductosService)
+    Public Sub New(productoService As ProductosService, notificationHandler As IPublisher(Of Producto))
         InitializeComponent()
 
         Dim repositorio As ProductosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
         _productoService = productoService ' New ProductosService(repositorio)
+        _notificationHandler = notificationHandler
 
     End Sub
-
-
 
     Private Async Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Try
@@ -35,8 +41,9 @@ Public Class frmProductos
 
             Await _productoService.CrearProducto(producto)
 
-
             MessageBox.Show("Producto guardado correctamente")
+
+            Await _notificationHandler.Notify("Crear", producto)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -125,5 +132,22 @@ Public Class frmProductos
         End Try
 
     End Sub
+
+    'Public Sub AddSubscriber(subscriber As ISubscriber(Of Producto)) Implements IPublisher(Of Producto).AddSubscriber
+    '    ListaObservadores.Add(subscriber)
+    'End Sub
+
+    'Public Sub RemoveSubscriber(subscriber As ISubscriber(Of Producto)) Implements IPublisher(Of Producto).RemoveSubscriber
+    '    ListaObservadores.Remove(subscriber)
+    'End Sub
+
+    'Public Function Notify(element As Producto) As Task Implements IPublisher(Of Producto).Notify
+    '    For Each observador In ListaObservadores
+    '        observador.Update(element)
+    '    Next
+
+    '    Return Task.CompletedTask
+    'End Function
+
 
 End Class
