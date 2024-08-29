@@ -1,10 +1,12 @@
 ﻿using BISoft.Ejercicios.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
 
 namespace BISoft.Ejercicios.Infraestructura.Contextos
 {
     public class Context:DbContext
     {
+
         public DbSet<Proveedor> Proveedores  { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Compra> Compras { get; set; }
@@ -26,6 +28,7 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
         {
             //modelBuilder.Entity<Proveedor>()
             //    .ToTable("Proveedores");
+
 
             modelBuilder.Entity<Proveedor>().HasKey(p => p.Id);
             modelBuilder.Entity<Proveedor>().Property(p => p.Nombre)
@@ -69,9 +72,9 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
             modelBuilder.Entity<Compra>(entity =>
             {
-                entity.HasKey(e => e.ComprasId);
+                entity.HasKey(e => e.CompraId);
 
-                entity.Property(e => e.ComprasId).HasColumnName("comprasId");
+                entity.Property(e => e.CompraId).HasColumnName("comprasId");
 
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(50)
@@ -165,5 +168,10 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
             );
         }
 
+    }
+
+    public class SequenceResult
+    {
+        public long Sequense { get; set; }
     }
 }

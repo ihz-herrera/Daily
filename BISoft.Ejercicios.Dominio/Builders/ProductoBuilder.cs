@@ -65,7 +65,7 @@ namespace BISoft.Ejercicios.Dominio.Builders
 
         public Producto Build()
         {
-            if (costo > precio)
+            if (costo >= precio)
                 throw new ArgumentException("El costo no puede ser mayor al precio");
 
             return new Producto(id, descripcion, precio, costo, status);
