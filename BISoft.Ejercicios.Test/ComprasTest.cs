@@ -8,7 +8,9 @@ namespace BISoft.Ejercicios.Test
 {
     public class ComprasTest
     {
-        [Fact]
+        [Fact(Skip = "Dependiente de Base de Datos")]
+        [Trait("Categoria", "Integral")]
+
         public async Task CreateCompras_Should_be_Ok()
         {
 
@@ -36,7 +38,10 @@ namespace BISoft.Ejercicios.Test
 
         }
 
-        [Fact]
+        [Fact(DisplayName ="Consulta Compras desde BD",Skip = "Dependiente de Base de Datos"
+            ,Timeout = 10000)]
+        [Trait("Categoria", "Integral")]
+
         public async Task QueryCompras_Should_be_Ok()
         {
 
