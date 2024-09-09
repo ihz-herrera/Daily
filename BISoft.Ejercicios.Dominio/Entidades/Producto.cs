@@ -23,7 +23,7 @@ namespace BISoft.Ejercicios.Dominio.Entidades
 
 
         //crear constructor
-        internal Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status)
+        internal Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status,int categoriaId, int fabricanteId)
         {
             ProductoId = productoId;
 
@@ -37,6 +37,9 @@ namespace BISoft.Ejercicios.Dominio.Entidades
                 .Positive(m => "El valor debe ser mayor a cero");
 
             Status = status;
+
+            CategoriaId =  Guard.Argument( categoriaId,"ID Categoría").Positive();
+            FabricanteId = Guard.Argument(fabricanteId, "ID Fabricante").Positive(); ;
         }
 
         public void SetCosto(decimal costo)

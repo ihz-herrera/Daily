@@ -68,7 +68,7 @@ namespace BISoft.Ejercicios.Dominio.Builders
             if (costo >= precio)
                 throw new ArgumentException("El costo no puede ser mayor al precio");
 
-            return new Producto(id, descripcion, precio, costo, status);
+            return new Producto(id, descripcion, precio, costo, status,categoriaId,fabricanteId);
         }
 
     }

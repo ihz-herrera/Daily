@@ -20,7 +20,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         private readonly IOutboxRepository _outboxRepository;
 
         public ProductosService(IProductosRepository repo,ICategoriasRepository repoCategorias,
-            IFabricantesRepository fabricantesRepository, OutboxRepository outboxRepository)
+            IFabricantesRepository fabricantesRepository, IOutboxRepository outboxRepository)
         {
             _outboxRepository = outboxRepository; // new OutboxRepository(new Context());
             _repo = repo;
@@ -34,6 +34,18 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             //Consultar si el producto ya existe
             var productoExiste= await _repo.ObtenerPorExpresion(
                 p=> p.ProductoId == producto.ProductoId );
+
+            var categoria = await _repoCategorias.ObtenerPorExpresion(
+                c=> c.CategoriaId == producto.CategoriaId);
+
+
+            if (categoria == null)
+                throw new InvalidOperationException("La categoria no existe");
+
+            var fabricante = await _repoFabricantes.ObtenerPorExpresion(fabricante => fabricante.FabricanteId == producto.FabricanteId);
+
+            if (fabricante == null)
+                throw new InvalidOperationException("El fabricante no existe");
 
             if (productoExiste != null)
                 {
@@ -69,6 +81,11 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             //retornar el producto creado o actualizado
             return producto;
+        }
+
+        public async Task<Producto> ObtenerProductoPorId(int id)
+        {
+            return await _repo.ObtenerPorExpresion( p=> p.ProductoId == id);
         }
 
         public async Task<IEnumerable<ProductoDto>> ObtenerProductos()
