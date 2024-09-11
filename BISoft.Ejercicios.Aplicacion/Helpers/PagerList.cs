@@ -74,12 +74,13 @@ namespace BISoft.Ejercicios.Aplicacion.Helpers
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
             AddRange(items);
+            
             _source = source;
         }
 
 
 
-        public static PagerList<T> Create(IQueryable<T> source, int pageIndex, int pageSize)
+        public static async Task<PagerList<T>> Create(IQueryable<T> source, int pageIndex, int pageSize)
         {
 
             if(pageSize <= 0)
@@ -92,8 +93,8 @@ namespace BISoft.Ejercicios.Aplicacion.Helpers
                 pageSize = MaxPageSize;
             }
 
-            var count = source.Count();
-            var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var count = await source.CountAsync();
+            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PagerList<T>(items, count, pageIndex, pageSize,source);
         }
 

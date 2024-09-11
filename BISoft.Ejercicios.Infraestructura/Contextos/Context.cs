@@ -1,22 +1,26 @@
 ﻿using BISoft.Ejercicios.Dominio.Entidades;
-using BISoft.Ejercicios.Infraestructura.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Update;
 
 namespace BISoft.Ejercicios.Infraestructura.Contextos
 {
     public class Context:DbContext
     {
+
         public DbSet<Proveedor> Proveedores  { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Compra> Compras { get; set; }
+        public DbSet<CompraDetalle> CompraDetalles { get; set; }
+
+        public DbSet<ProductoPermitidoCompra> ProductosPermitidosCompras { get; set; }
 
         public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
+
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Fabricante> Fabricantes { get; set; }
+
+        public DbSet<CodigoRelacionado> CodigosRelacionados { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +31,7 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
         {
             //modelBuilder.Entity<Proveedor>()
             //    .ToTable("Proveedores");
+
 
             modelBuilder.Entity<Proveedor>().HasKey(p => p.Id);
             modelBuilder.Entity<Proveedor>().Property(p => p.Nombre)
@@ -59,14 +64,20 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
                 entity.Property(e => e.Status)
                 .HasColumnName("status");
+
+                ////Ignorar la propiedad categoria Id
+                //entity.Ignore(e => e.CategoriaId);
+
+                ////Ignorar la propiedad fabricante Id
+                //entity.Ignore(e => e.FabricanteId);
             });
 
 
             modelBuilder.Entity<Compra>(entity =>
             {
-                entity.HasKey(e => e.ComprasId);
+                entity.HasKey(e => e.CompraId);
 
-                entity.Property(e => e.ComprasId).HasColumnName("comprasId");
+                entity.Property(e => e.CompraId).HasColumnName("comprasId");
 
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(50)
@@ -75,6 +86,15 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
                 entity.Property(e => e.Proveedor).HasColumnName("proveedor");
             });
+
+
+            modelBuilder.Entity<ProductoPermitidoCompra>(entity =>
+            {
+                entity.ToTable("productosPermitidosCompra");
+                entity.HasKey(entity => new { entity.SucursalId, entity.ProductoId });
+
+            });
+
 
             modelBuilder.Entity<Sucursal>(entity =>
             {
@@ -124,7 +144,58 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                     .IsUnicode(false)
                     .HasColumnName("failureReason");
             });
+
+
+            modelBuilder.Entity<Categoria>(entity =>
+            {
+                entity.HasKey(e => e.CategoriaId);
+
+                entity.Property(e => e.CategoriaId)
+                .UseIdentityColumn();
+            }
+            );
+
+            modelBuilder.Entity<Fabricante>(entity =>
+            {
+                entity.HasKey(e => e.FabricanteId);
+
+                entity.Property(e => e.FabricanteId)
+                .UseIdentityColumn();
+            }
+            );
+
+            modelBuilder.Entity<CodigoRelacionado>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                .UseIdentityColumn()
+                ;
+
+                entity.HasOne(d=> d.Producto)
+                    .WithMany(p => p.CodigosRelacionados)
+                    .HasForeignKey(d => d.ProductoId)
+                    .HasConstraintName("FK_CodigoRelacionado_Producto");
+            }
+            );
+
+
+            modelBuilder.Entity<CompraDetalle>(e => 
+            {  
+                e.ToTable("cmpCompraDet");
+                e.HasKey(e => new { e.CompraId, e.ProductoId });
+                e.HasOne(e => e.Compra)
+                .WithMany(e => e.CompraDetalles)
+                .HasForeignKey(e => e.CompraId)
+                .HasConstraintName("FK_CompraDetalle_Compra");
+            }
+            );
         }
 
+    }
+
+    public class SequenceResult
+    {
+        public long Sequense { get; set; }
     }
 }

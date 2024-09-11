@@ -1,7 +1,4 @@
-﻿using BISoft.Ejercicios.Infraestructura.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace BISoft.Ejercicios.Dominio.Entidades
 {

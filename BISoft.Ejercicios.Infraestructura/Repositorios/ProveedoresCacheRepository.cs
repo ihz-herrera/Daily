@@ -1,13 +1,7 @@
-﻿using BISoft.Ejercicios.Infraestructura.Contextos;
-using BISoft.Ejercicios.Infraestructura.Contratos;
-using BISoft.Ejercicios.Infraestructura.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BISoft.Ejercicios.Dominio.Contratos;
+using BISoft.Ejercicios.Dominio.Entidades;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Infraestructura.Repositorios
 {

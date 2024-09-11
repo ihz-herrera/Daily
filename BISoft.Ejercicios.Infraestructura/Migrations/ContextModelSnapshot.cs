@@ -22,6 +22,83 @@ namespace BISoft.Ejercicios.Infraestructura.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.Categoria", b =>
+                {
+                    b.Property<int>("CategoriaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"), 1L, 1);
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoriaId");
+
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.CodigoRelacionado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("CodigosRelacionados");
+                });
+
+            modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.Fabricante", b =>
+                {
+                    b.Property<int>("FabricanteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FabricanteId"), 1L, 1);
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FabricanteId");
+
+                    b.ToTable("Fabricantes");
+                });
+
             modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.OutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -71,6 +148,44 @@ namespace BISoft.Ejercicios.Infraestructura.Migrations
                     b.ToTable("OutboxMessages", "outbox");
                 });
 
+            modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.Producto", b =>
+                {
+                    b.Property<int>("ProductoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("codigoProducto");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoId"), 1L, 1);
+
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Costo")
+                        .HasColumnType("money")
+                        .HasColumnName("costo");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("nombreProducto");
+
+                    b.Property<int>("FabricanteId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("money")
+                        .HasColumnName("precio");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit")
+                        .HasColumnName("status");
+
+                    b.HasKey("ProductoId");
+
+                    b.ToTable("genProductosCat", "dbo");
+                });
+
             modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.Sucursal", b =>
                 {
                     b.Property<short>("Id")
@@ -117,38 +232,6 @@ namespace BISoft.Ejercicios.Infraestructura.Migrations
                     b.ToTable("Compras");
                 });
 
-            modelBuilder.Entity("BISoft.Ejercicios.Infraestructura.Entidades.Producto", b =>
-                {
-                    b.Property<int>("ProductoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("codigoProducto");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoId"), 1L, 1);
-
-                    b.Property<decimal>("Costo")
-                        .HasColumnType("money")
-                        .HasColumnName("costo");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nombreProducto");
-
-                    b.Property<decimal>("Precio")
-                        .HasColumnType("money")
-                        .HasColumnName("precio");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
-                        .HasColumnName("status");
-
-                    b.HasKey("ProductoId");
-
-                    b.ToTable("genProductosCat", "dbo");
-                });
-
             modelBuilder.Entity("BISoft.Ejercicios.Infraestructura.Entidades.Proveedor", b =>
                 {
                     b.Property<int>("Id")
@@ -170,6 +253,23 @@ namespace BISoft.Ejercicios.Infraestructura.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Proveedores");
+                });
+
+            modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.CodigoRelacionado", b =>
+                {
+                    b.HasOne("BISoft.Ejercicios.Dominio.Entidades.Producto", "Producto")
+                        .WithMany("CodigosRelacionados")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CodigoRelacionado_Producto");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("BISoft.Ejercicios.Dominio.Entidades.Producto", b =>
+                {
+                    b.Navigation("CodigosRelacionados");
                 });
 #pragma warning restore 612, 618
         }

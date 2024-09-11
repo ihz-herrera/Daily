@@ -1,7 +1,6 @@
-﻿using BISoft.Ejercicios.Infraestructura.Contextos;
-using BISoft.Ejercicios.Infraestructura.Contratos;
-using BISoft.Ejercicios.Infraestructura.Entidades;
-using Microsoft.EntityFrameworkCore;
+﻿using BISoft.Ejercicios.Dominio.Contratos;
+using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Infraestructura.Contextos;
 
 namespace BISoft.Ejercicios.Infraestructura.Repositorios
 {
@@ -13,6 +12,10 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         }
 
      
+        public IQueryable<Producto> ObtenerProductos()
+        {
+            return _context.Productos;
+        }
 
         public void EliminarProducto(int id)
         {

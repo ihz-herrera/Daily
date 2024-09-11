@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BISoft.Ejercicios.Infraestructura.Entidades
+namespace BISoft.Ejercicios.Dominio.Entidades
 {
-    public partial class Compra
+    public partial class Compra : Entity
     {
-        public int ComprasId { get; set; }
+        public int CompraId { get; set; }
         public int Proveedor { get; set; }
         public string Descripcion { get; set; } = null!;
+
+        public virtual ICollection<CompraDetalle> CompraDetalles { get; set; } = new HashSet<CompraDetalle>();
     }
 }

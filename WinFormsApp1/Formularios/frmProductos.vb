@@ -1,28 +1,30 @@
-﻿Imports BISoft.Ejercicios.Aplicacion.Fabricas
-Imports BISoft.Ejercicios.Dominio.Builders
-Imports BISoft.Ejercicios.Infraestructura.Contextos
-Imports BISoft.Ejercicios.Infraestructura.Entidades
-Imports BISoft.Ejercicios.Infraestructura.Repositorios
-Imports BISoft.Ejercicios.Aplicacion.Servicios
-Imports BISoft.Ejercicios.Aplicacion.Dtos.Parametros
+﻿Imports BISoft.Ejercicios.Aplicacion.Dtos.Parametros
+Imports BISoft.Ejercicios.Aplicacion.Fabricas
 Imports BISoft.Ejercicios.Aplicacion.Helpers
+Imports BISoft.Ejercicios.Aplicacion.Servicios
+Imports BISoft.Ejercicios.Dominio.Builders
+Imports BISoft.Ejercicios.Dominio.Entidades
+Imports BISoft.Ejercicios.Dominio.Observador
+Imports BISoft.Ejercicios.Infraestructura.Repositorios
+
+
+''Todo: Bloquear tareas asincronas en los eventos
 
 Public Class frmProductos
+    'Implements IPublisher(Of Producto)
+
+    'Private ListaObservadores As List(Of ISubscriber(Of Producto)) = New List(Of ISubscriber(Of Producto))
 
     Private ReadOnly _productoService As ProductosService
     Private _pagerProductList As PagerList(Of Producto)
+    Private _notificationHandler As IPublisher(Of Producto)
 
-    Public Sub New()
+    Public Sub New(productoService As ProductosService, notificationHandler As IPublisher(Of Producto))
         InitializeComponent()
 
         Dim repositorio As ProductosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
-        _productoService = New ProductosService(repositorio)
-
-    End Sub
-
-    Private Sub frmProductos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-
+        _productoService = productoService ' New ProductosService(repositorio)
+        _notificationHandler = notificationHandler
 
     End Sub
 
@@ -39,8 +41,9 @@ Public Class frmProductos
 
             Await _productoService.CrearProducto(producto)
 
-
             MessageBox.Show("Producto guardado correctamente")
+
+            Await _notificationHandler.Notify("Crear", producto)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -49,7 +52,6 @@ Public Class frmProductos
     End Sub
 
     Private Async Sub frmProductos_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-
 
         Await CargarProductos(1)
         ActualizarPaginaGrid()
@@ -84,6 +86,7 @@ Public Class frmProductos
         Else
             btnNext.Enabled = True
         End If
+
 
     End Sub
 
@@ -130,5 +133,22 @@ Public Class frmProductos
         End Try
 
     End Sub
+
+    'Public Sub AddSubscriber(subscriber As ISubscriber(Of Producto)) Implements IPublisher(Of Producto).AddSubscriber
+    '    ListaObservadores.Add(subscriber)
+    'End Sub
+
+    'Public Sub RemoveSubscriber(subscriber As ISubscriber(Of Producto)) Implements IPublisher(Of Producto).RemoveSubscriber
+    '    ListaObservadores.Remove(subscriber)
+    'End Sub
+
+    'Public Function Notify(element As Producto) As Task Implements IPublisher(Of Producto).Notify
+    '    For Each observador In ListaObservadores
+    '        observador.Update(element)
+    '    Next
+
+    '    Return Task.CompletedTask
+    'End Function
+
 
 End Class

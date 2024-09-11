@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BISoft.Ejercicios.Infraestructura.Entidades
+namespace BISoft.Ejercicios.Dominio.Entidades
 {
     public partial class Producto:Entity
     {
@@ -12,10 +12,18 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
         public decimal Costo { get;  private set ; }
         public bool Status { get; set; } = true;
 
+
+        public int FabricanteId { get; set; }
+        public int CategoriaId { get; set; }
+
        
+        //Propiedades de navegacion
+        public virtual List<CodigoRelacionado> CodigosRelacionados { get; set; } 
+            = new List<CodigoRelacionado>();
+
 
         //crear constructor
-        internal Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status)
+        internal Producto(int productoId, string descripcion, decimal precio, decimal costo, bool status,int categoriaId, int fabricanteId)
         {
             ProductoId = productoId;
 
@@ -29,6 +37,9 @@ namespace BISoft.Ejercicios.Infraestructura.Entidades
                 .Positive(m => "El valor debe ser mayor a cero");
 
             Status = status;
+
+            CategoriaId =  Guard.Argument( categoriaId,"ID Categoría").Positive();
+            FabricanteId = Guard.Argument(fabricanteId, "ID Fabricante").Positive(); ;
         }
 
         public void SetCosto(decimal costo)

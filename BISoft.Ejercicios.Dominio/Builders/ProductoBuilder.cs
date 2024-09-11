@@ -1,4 +1,4 @@
-﻿using BISoft.Ejercicios.Infraestructura.Entidades;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +13,8 @@ namespace BISoft.Ejercicios.Dominio.Builders
         private decimal precio;
         private decimal costo;
         private bool status;
+        private int categoriaId;
+        private int fabricanteId;
 
         public static ProductoBuilder Empty => new ProductoBuilder();
 
@@ -46,13 +48,27 @@ namespace BISoft.Ejercicios.Dominio.Builders
             return this;
         }
 
+        public ProductoBuilder WithCategoriaId(int categoriaId)
+        {
+            this.categoriaId = categoriaId;
+            return this;
+        }
+
+
+        public ProductoBuilder WithFabricanteId(int fabricanteId)
+        {
+            this.fabricanteId = fabricanteId; 
+            return this;
+        }
+
+
 
         public Producto Build()
         {
-            if (costo > precio)
+            if (costo >= precio)
                 throw new ArgumentException("El costo no puede ser mayor al precio");
 
-            return new Producto(id, descripcion, precio, costo, status);
+            return new Producto(id, descripcion, precio, costo, status,categoriaId,fabricanteId);
         }
 
     }
