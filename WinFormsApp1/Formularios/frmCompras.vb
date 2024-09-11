@@ -9,11 +9,13 @@ Public Class frmCompras
     Private ReadOnly _productosService As ProductosService
     Private ReadOnly _sucursalesService As SucursalesService
     Private ReadOnly _proveedoresService As ProveedoresService
+    Private ReadOnly _comprasService As ComprasService
 
 
-    Public Sub New(productoService As ProductosService)
+    Public Sub New(productoService As ProductosService, comprasService As ComprasService)
         InitializeComponent()
 
+        _comprasService = comprasService
 
         ''Crear repositorios
         Dim productosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
@@ -35,16 +37,15 @@ Public Class frmCompras
 
     Private Async Sub frmCompras_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        Dim productos = _productosService.ObtenerProductos()
+
+
         Dim sucursales = _sucursalesService.ObtenerSucursales()
         Dim proveedores = _proveedoresService.ObtenerProveedores()
 
 
-        Await Task.WhenAll(productos, sucursales, proveedores)
+        Await Task.WhenAll(sucursales, proveedores)
 
-        cmbProducto.DataSource = Await productos
-        cmbProducto.DisplayMember = "Descripcion"
-        cmbProducto.ValueMember = "ProductoId"
+
 
         cmbSucursal.DataSource = Await sucursales
         cmbSucursal.DisplayMember = "Nombre"
@@ -53,6 +54,15 @@ Public Class frmCompras
         cmbProveedor.DataSource = Await proveedores
         cmbProveedor.DisplayMember = "Nombre"
         cmbProveedor.ValueMember = "Id"
+
+        Dim sucursalId = cmbSucursal.SelectedValue
+
+        Dim productos = Await _comprasService.ProductosPermitidos(sucursalId)
+
+        cmbProducto.DataSource = productos
+        cmbProducto.DisplayMember = "Descripcion"
+        cmbProducto.ValueMember = "ProductoId"
+
 
         MsgBox("Datos cargados correctamente")
 

@@ -16,6 +16,12 @@ namespace BISoft.Ejercicios.Test.Fabricas
 {
     public static class ProductoFactory
     {
+
+        public static IProductosRepository CrearProductoRepository()
+        {
+            return new ProductosRepository(new Context());
+        }
+
         public static Producto CrearProductoValidoActivo=> ProductoBuilder.Empty
                 .WithId(1)
                 .WithDescripcion("Producto 1")

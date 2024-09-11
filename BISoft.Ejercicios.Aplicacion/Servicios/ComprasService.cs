@@ -1,5 +1,6 @@
 ﻿using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
     {
 
         private readonly IComprasRepository _comprasRepository;
+        private readonly IProductosRepository _productosRepository;
 
-        public ComprasService(IComprasRepository comprasRepository)
+        public ComprasService(IComprasRepository comprasRepository, IProductosRepository productosRepository)
         {
             _comprasRepository = comprasRepository;
+            _productosRepository = productosRepository;
         }
 
         public async Task CrearCompra(Compra compra)
@@ -25,12 +28,31 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         public async Task<List<Compra>> ObtenerCompras()
         {
-            return await _comprasRepository.ObtenerTodos();
+            return await _comprasRepository.ObtenerComprasConDetalle();
+        }
+
+        public async Task<List<Producto>> ProductosPermitidos(int sucursalId)
+        {
+            var productosPermitidos = _comprasRepository.ProductosPermitidosCompras();
+            var productos = _productosRepository.ObtenerProductos();
+
+            //productos.Where(p=> productosPermitidos.Any(
+            //    pp => pp.ProductoId == p.ProductoId
+            //    && pp.SucursalId == sucursalId));
+
+            var productosPermitidosResult = from p in productos
+                                            join pp in productosPermitidos on p.ProductoId equals pp.ProductoId
+                                            where pp.SucursalId == sucursalId && p.Status == true
+                                            select p;
+
+            return await productosPermitidosResult.ToListAsync();
+
         }
 
         public async Task<Compra> ObtenerCompraPorId(int id)
         {
-            return await _comprasRepository.ObtenerPorExpresion(x => x.CompraId == id);
+            return await _comprasRepository
+                .ObtenerCompraConDetalle(id);
         }
 
         public async Task ActualizarCompra(Compra compra)

@@ -26,13 +26,16 @@ Public Class MEnu
     Private Sub ConfigurarIoC()
 
         contenedor.Register(Of ProductosService)()
+        contenedor.Register(Of ComprasService)()
 
         contenedor.Register(Of IProductosRepository, ProductosRepository)()
         contenedor.Register(Of ICategoriasRepository, CategoriasRepository)()
         contenedor.Register(Of IFabricantesRepository, FabricantesRepository)()
 
-        contenedor.Register(Of OutboxRepository)()
+        contenedor.Register(Of IOutboxRepository, OutboxRepository)()
         contenedor.Register(Of Context)(Lifestyle.Singleton)
+
+        contenedor.Register(Of IComprasRepository, ComprasRepository)()
 
         'Dim Registration = contenedor.GetRegistration(GetType(Context)).Registration
 
@@ -65,8 +68,9 @@ Public Class MEnu
     Private Sub btnCompras_Click(sender As Object, e As EventArgs) Handles btnCompras.Click
 
         Dim productosService = contenedor.GetInstance(Of ProductosService)()
+        Dim compraService = contenedor.GetInstance(Of ComprasService)()
 
-        frmCompras = New frmCompras(productosService)
+        frmCompras = New frmCompras(productosService, compraService)
         frmCompras.Show()
     End Sub
 End Class

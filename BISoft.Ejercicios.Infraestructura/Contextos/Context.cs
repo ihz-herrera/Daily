@@ -10,6 +10,9 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
         public DbSet<Proveedor> Proveedores  { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Compra> Compras { get; set; }
+        public DbSet<CompraDetalle> CompraDetalles { get; set; }
+
+        public DbSet<ProductoPermitidoCompra> ProductosPermitidosCompras { get; set; }
 
         public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
@@ -83,6 +86,15 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
                 entity.Property(e => e.Proveedor).HasColumnName("proveedor");
             });
+
+
+            modelBuilder.Entity<ProductoPermitidoCompra>(entity =>
+            {
+                entity.ToTable("productosPermitidosCompra");
+                entity.HasKey(entity => new { entity.SucursalId, entity.ProductoId });
+
+            });
+
 
             modelBuilder.Entity<Sucursal>(entity =>
             {
@@ -164,6 +176,18 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                     .WithMany(p => p.CodigosRelacionados)
                     .HasForeignKey(d => d.ProductoId)
                     .HasConstraintName("FK_CodigoRelacionado_Producto");
+            }
+            );
+
+
+            modelBuilder.Entity<CompraDetalle>(e => 
+            {  
+                e.ToTable("cmpCompraDet");
+                e.HasKey(e => new { e.CompraId, e.ProductoId });
+                e.HasOne(e => e.Compra)
+                .WithMany(e => e.CompraDetalles)
+                .HasForeignKey(e => e.CompraId)
+                .HasConstraintName("FK_CompraDetalle_Compra");
             }
             );
         }

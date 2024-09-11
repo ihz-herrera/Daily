@@ -12,6 +12,10 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
         }
 
      
+        public IQueryable<Producto> ObtenerProductos()
+        {
+            return _context.Productos;
+        }
 
         public void EliminarProducto(int id)
         {

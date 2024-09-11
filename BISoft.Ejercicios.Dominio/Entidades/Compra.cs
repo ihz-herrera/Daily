@@ -8,5 +8,7 @@ namespace BISoft.Ejercicios.Dominio.Entidades
         public int CompraId { get; set; }
         public int Proveedor { get; set; }
         public string Descripcion { get; set; } = null!;
+
+        public virtual ICollection<CompraDetalle> CompraDetalles { get; set; } = new HashSet<CompraDetalle>();
     }
 }

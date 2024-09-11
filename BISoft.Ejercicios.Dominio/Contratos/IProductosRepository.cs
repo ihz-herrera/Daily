@@ -1,4 +1,5 @@
 ﻿using BISoft.Ejercicios.Dominio.Entidades;
+using System.Linq;
 
 namespace BISoft.Ejercicios.Dominio.Contratos
 {
@@ -6,5 +7,7 @@ namespace BISoft.Ejercicios.Dominio.Contratos
     {
 
         void EliminarProducto(int id);
+
+        IQueryable<Producto> ObtenerProductos();
     }
 }

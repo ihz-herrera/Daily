@@ -2,13 +2,14 @@ using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
+using BISoft.Ejercicios.Test.Fabricas;
 using Microsoft.EntityFrameworkCore;
 
 namespace BISoft.Ejercicios.Test
 {
     public class ComprasTest
     {
-        [Fact(Skip = "Dependiente de Base de Datos")]
+        [Fact]
         [Trait("Categoria", "Integral")]
 
         public async Task CreateCompras_Should_be_Ok()
@@ -16,7 +17,7 @@ namespace BISoft.Ejercicios.Test
 
             // Arrange
 
-            var _comprasRepository = new ComprasRepository(new Context());
+            var servicio = ComprasFactory.CrearComprasService();
 
             var compra = new Compra
             {
@@ -25,16 +26,34 @@ namespace BISoft.Ejercicios.Test
                 Descripcion = "Compra de prueba"
             };
 
+            compra.CompraDetalles.Add(new CompraDetalle
+            {
+                ProductoId = 1,
+                Cantidad = 10,
+                Precio = 100
+            });
+
             // Act
-            await _comprasRepository.Crear(compra);
+            await servicio.CrearCompra(compra);
 
 
-            var compraConsultar= await _comprasRepository
-                .ObtenerPorExpresion(x => x.CompraId == compra.CompraId);
+            var resultado = await servicio.ObtenerCompraPorId(compra.CompraId);
 
             // Assert
-            Assert.NotNull(compraConsultar);
+            Assert.NotNull(resultado);
 
+
+        }
+
+        [Fact]
+        public async Task ProductosPermitidos_ShouldReturnProductos_WhenProductoEsPermitido()
+        {
+
+            var servicio = ComprasFactory.CrearComprasService();
+
+            var productos = await servicio.ProductosPermitidos(2);
+
+            Assert.NotNull(productos);
 
         }
 
