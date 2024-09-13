@@ -1,4 +1,6 @@
-﻿Imports BISoft.Ejercicios.Aplicacion.Fabricas
+﻿Imports BISoft.Ejercicios.Aplicacion.Builder
+Imports BISoft.Ejercicios.Aplicacion.Dtos
+Imports BISoft.Ejercicios.Aplicacion.Fabricas
 Imports BISoft.Ejercicios.Aplicacion.Servicios
 Imports BISoft.Ejercicios.Dominio.Entidades
 Imports BISoft.Ejercicios.Dominio.Observador
@@ -55,6 +57,8 @@ Public Class frmCompras
         cmbProveedor.DisplayMember = "Nombre"
         cmbProveedor.ValueMember = "Id"
 
+        ''Se carga la lista de productos permitidos para la sucursal seleccionada
+        ''despues de cargar las sucursales
         Dim sucursalId = cmbSucursal.SelectedValue
 
         Dim productos = Await _comprasService.ProductosPermitidos(sucursalId)
@@ -74,4 +78,35 @@ Public Class frmCompras
         Me.Text += "Producto actualizado"
         Return Task.CompletedTask
     End Function
+
+    Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+
+
+        Dim compra = New Compra()
+
+        'Dim detalle = New CompraDetalle With {
+        '    .Cantidad = 10,
+        '    .Precio = 10,
+        '    .ProductoId = 4000
+        '}
+
+        Dim listaDetalles = New List(Of ProductoPermitidoDto)
+
+        Dim productoPermitido = New ProductosPermitidosDtoBuilder().WithProductoId(1).WithDescripcion("Un producto").WithSucursalId(1).Build()
+        '    1, 2, "Un producto", True)
+
+        'listaDetalles.Add(productoPermitido)
+        listaDetalles.Add(cmbProducto.SelectedValue)
+
+        '' compra.CompraDetalles.Add(detalle)
+
+
+
+        _comprasService.CrearCompra(compra, listaDetalles)
+
+        MsgBox("Compra guardada correctamente")
+
+
+
+    End Sub
 End Class
