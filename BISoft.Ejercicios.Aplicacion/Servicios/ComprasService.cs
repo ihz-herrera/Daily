@@ -33,12 +33,13 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         public async Task<Compra> CrearCompra(Compra compra,List<ProductoPermitidoDto> permitidos)
         {
             //Validar que los productos esten permitidos
-            var productosNoValidados = permitidos.Where(p => p.Status == false).ToList();
+            var productosNoValidados = permitidos
+                .Where(p => p.Validado == false).ToList();
 
-            if (productosNoValidados.Count > 0)
-            {
-                ValidarProductos(productosNoValidados);
-            }
+            //if (productosNoValidados.Count > 0)
+            //{
+            //    ValidarProductos(productosNoValidados);
+            //}
 
             var productosSucursalValida = permitidos
                 .Where(p => p.SucursalId == compra.SucursalId).Count();
@@ -79,7 +80,8 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         public async Task<List<ProductoPermitidoDto>> ProductosPermitidos(int sucursalId)
         {
-            var productosPermitidos = _comprasRepository.ProductosPermitidosCompras();
+            var productosPermitidos = _comprasRepository
+                .ProductosPermitidosCompras();
             var productos = _productosRepository.ObtenerProductos();
 
             //productos.Where(p=> productosPermitidos.Any(

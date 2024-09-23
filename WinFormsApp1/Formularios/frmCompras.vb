@@ -1,6 +1,7 @@
 ﻿Imports BISoft.Ejercicios.Aplicacion.Builder
 Imports BISoft.Ejercicios.Aplicacion.Dtos
 Imports BISoft.Ejercicios.Aplicacion.Fabricas
+Imports BISoft.Ejercicios.Aplicacion.Fachadas
 Imports BISoft.Ejercicios.Aplicacion.Servicios
 Imports BISoft.Ejercicios.Dominio.Entidades
 Imports BISoft.Ejercicios.Dominio.Observador
@@ -12,6 +13,7 @@ Public Class frmCompras
     Private ReadOnly _sucursalesService As SucursalesService
     Private ReadOnly _proveedoresService As ProveedoresService
     Private ReadOnly _comprasService As ComprasService
+
 
 
     Public Sub New(productoService As ProductosService, comprasService As ComprasService)
@@ -92,7 +94,7 @@ Public Class frmCompras
 
         Dim listaDetalles = New List(Of ProductoPermitidoDto)
 
-        Dim productoPermitido = New ProductosPermitidosDtoBuilder().WithProductoId(1).WithDescripcion("Un producto").WithSucursalId(1).Build()
+        Dim productoPermitido = New ProductoPermitidoDtoBuilder().WithProductoId(1).WithDescripcion("Un producto").WithSucursalId(1).Build()
         '    1, 2, "Un producto", True)
 
         'listaDetalles.Add(productoPermitido)
@@ -109,4 +111,9 @@ Public Class frmCompras
 
 
     End Sub
+
+    Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
+
+    End Sub
+
 End Class

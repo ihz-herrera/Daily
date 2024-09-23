@@ -7,30 +7,30 @@ using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Aplicacion.Builder
 {
-    public class ProductosPermitidosDtoBuilder
+    public class ProductoPermitidoDtoBuilder
     {
         private int _productoId;
         private int _sucursalId;
         private string _descripcion;
 
-        public static ProductosPermitidosDtoBuilder Empty()
+        public static ProductoPermitidoDtoBuilder Empty()
         {
-            return new ProductosPermitidosDtoBuilder();
+            return new ProductoPermitidoDtoBuilder();
         }
 
-        public ProductosPermitidosDtoBuilder WithProductoId(int productoId)
+        public ProductoPermitidoDtoBuilder WithProductoId(int productoId)
         {
             _productoId = productoId;
             return this;
         }
 
-        public ProductosPermitidosDtoBuilder WithSucursalId(int sucursalId)
+        public ProductoPermitidoDtoBuilder WithSucursalId(int sucursalId)
         {
             _sucursalId = sucursalId;
             return this;
         }
 
-        public ProductosPermitidosDtoBuilder WithDescripcion(string descripcion)
+        public ProductoPermitidoDtoBuilder WithDescripcion(string descripcion)
         {
             _descripcion = descripcion;
             return this;

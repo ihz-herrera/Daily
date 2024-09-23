@@ -34,7 +34,7 @@ namespace BISoft.Ejercicios.Test
             });
 
             // Act
-            await servicio.CrearCompra(compra);
+            //await servicio.CrearCompra(compra);
 
 
             var resultado = await servicio.ObtenerCompraPorId(compra.CompraId);

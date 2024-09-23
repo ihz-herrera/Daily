@@ -30,6 +30,11 @@ Partial Class frmCompras
         btnGuardar = New Button()
         Label3 = New Label()
         cmbSucursal = New ComboBox()
+        btnAgregar = New Button()
+        Label4 = New Label()
+        Label5 = New Label()
+        txtArtivulos = New TextBox()
+        txtSubTotal = New TextBox()
         CType(dgvCompras, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -74,7 +79,7 @@ Partial Class frmCompras
         dgvCompras.Name = "dgvCompras"
         dgvCompras.RowHeadersWidth = 51
         dgvCompras.RowTemplate.Height = 29
-        dgvCompras.Size = New Size(597, 426)
+        dgvCompras.Size = New Size(597, 368)
         dgvCompras.TabIndex = 4
         ' 
         ' btnGuardar
@@ -103,11 +108,57 @@ Partial Class frmCompras
         cmbSucursal.Size = New Size(219, 28)
         cmbSucursal.TabIndex = 6
         ' 
+        ' btnAgregar
+        ' 
+        btnAgregar.Location = New Point(12, 221)
+        btnAgregar.Name = "btnAgregar"
+        btnAgregar.Size = New Size(94, 29)
+        btnAgregar.TabIndex = 8
+        btnAgregar.Text = "Agregar"
+        btnAgregar.UseVisualStyleBackColor = True
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(677, 394)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(67, 20)
+        Label4.TabIndex = 9
+        Label4.Text = "Articulos"
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(677, 421)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(67, 20)
+        Label5.TabIndex = 10
+        Label5.Text = "SubTotal"
+        ' 
+        ' txtArtivulos
+        ' 
+        txtArtivulos.Location = New Point(760, 391)
+        txtArtivulos.Name = "txtArtivulos"
+        txtArtivulos.Size = New Size(125, 27)
+        txtArtivulos.TabIndex = 11
+        ' 
+        ' txtSubTotal
+        ' 
+        txtSubTotal.Location = New Point(760, 424)
+        txtSubTotal.Name = "txtSubTotal"
+        txtSubTotal.Size = New Size(125, 27)
+        txtSubTotal.TabIndex = 12
+        ' 
         ' frmCompras
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(897, 450)
+        Controls.Add(txtSubTotal)
+        Controls.Add(txtArtivulos)
+        Controls.Add(Label5)
+        Controls.Add(Label4)
+        Controls.Add(btnAgregar)
         Controls.Add(Label3)
         Controls.Add(cmbSucursal)
         Controls.Add(btnGuardar)
@@ -131,4 +182,9 @@ Partial Class frmCompras
     Friend WithEvents btnGuardar As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents cmbSucursal As ComboBox
+    Friend WithEvents btnAgregar As Button
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents txtArtivulos As TextBox
+    Friend WithEvents txtSubTotal As TextBox
 End Class
