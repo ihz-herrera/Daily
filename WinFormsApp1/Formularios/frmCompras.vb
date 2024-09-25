@@ -7,12 +7,14 @@ Imports BISoft.Ejercicios.Dominio.Entidades
 Imports BISoft.Ejercicios.Dominio.Observador
 
 Public Class frmCompras
-    Implements ISubscriber(Of Producto)
+    Implements ISubscriber(Of Producto), IObserver(Of CompraFacade)
 
     Private ReadOnly _productosService As ProductosService
     Private ReadOnly _sucursalesService As SucursalesService
     Private ReadOnly _proveedoresService As ProveedoresService
     Private ReadOnly _comprasService As ComprasService
+
+    Private _compra As CompraFacade
 
 
 
@@ -114,6 +116,52 @@ Public Class frmCompras
 
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
 
+        If (_compra Is Nothing) Then
+            _compra = New CompraFacade()
+            _compra.Subscribe(Me)
+        End If
+
+        Dim producto = CType(cmbProducto.SelectedItem, ProductoPermitidoDto)
+
+        _compra.AgregarLinea(producto)
+
+
     End Sub
 
+    Public Sub OnCompleted() Implements IObserver(Of CompraFacade).OnCompleted
+        Limpiar()
+    End Sub
+
+    Private Sub Limpiar()
+        ''Limpiar controles
+
+    End Sub
+
+    Public Sub OnError([error] As Exception) Implements IObserver(Of CompraFacade).OnError
+
+        MessageBox.Show([error].Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+    End Sub
+
+    Public Sub OnNext(value As CompraFacade) Implements IObserver(Of CompraFacade).OnNext
+
+        txtArtivulos.Text = value.Articulos.ToString()
+        txtSubTotal.Text = value.SubTotal.ToString()
+
+        dgvCompras.DataSource = Nothing
+        dgvCompras.DataSource = value.Lineas
+        dgvCompras.Update()
+        dgvCompras.Refresh()
+
+    End Sub
+
+    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+        If (_compra Is Nothing) Then
+            Exit Sub
+        End If
+
+        Dim producto = CType(cmbProducto.SelectedItem, ProductoPermitidoDto)
+
+        _compra.EliminarLinea(producto)
+    End Sub
 End Class

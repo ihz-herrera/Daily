@@ -95,6 +95,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                                                 p.ProductoId,
                                                 pp.SucursalId,
                                                 p.Descripcion,
+                                                p.Precio,
                                                 true
                                                 )
                                             ;

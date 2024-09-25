@@ -59,8 +59,8 @@ Public Class MEnu
         emailService.SendEmail("ivan@gmail.com", "Hola", "Hola Ivan")
 
         Dim productosService = contenedor.GetInstance(Of ProductosService)()
-        notificationHandler.AddSubscriber("Crear", frmCompras)
-        notificationHandler.AddSubscriber("Actualizar", frmCompras)
+        notificationHandler.AddSubscriber(frmCompras, "Crear", "Actualizar", "Error", "MuchasMas")
+        'notificationHandler.AddSubscriber("Actualizar", frmCompras)
         frmProductos = New frmProductos(productosService, notificationHandler)
         frmProductos.Show()
     End Sub

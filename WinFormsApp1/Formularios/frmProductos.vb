@@ -43,7 +43,7 @@ Public Class frmProductos
 
             MessageBox.Show("Producto guardado correctamente")
 
-            Await _notificationHandler.Notify("Crear", producto)
+            Await _notificationHandler.Notify(producto, "Compras:Cancelar", "MuchosMas")
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

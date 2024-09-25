@@ -11,22 +11,26 @@ namespace BISoft.Ejercicios.Aplicacion.Dtos
         public int ProductoId { get; private set; }
         public int SucursalId { get; private set; }
         public string Descripcion { get; private set; }
+        public decimal Precio { get; private set; }
+
         public bool Validado { get; private set; }
 
-        internal ProductoPermitidoDto(int productoId, int sucursalId, string descripcion, bool validado)
+        internal ProductoPermitidoDto(int productoId, int sucursalId, string descripcion,decimal precio, bool validado)
         {
             ProductoId = productoId;
             SucursalId = sucursalId;
             Descripcion = descripcion;
+            Precio = precio;
             Validado = validado;
         }
 
-        public ProductoPermitidoDto(int productoId, int sucursalId, string descripcion)
+        public ProductoPermitidoDto(int productoId, int sucursalId, decimal precio, string descripcion)
         {
             ProductoId = productoId;
             SucursalId = sucursalId;
             Descripcion = descripcion;
             Validado = false;
+            Precio = precio;
         }
     }
 }

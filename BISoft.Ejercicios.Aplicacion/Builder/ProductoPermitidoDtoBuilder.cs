@@ -1,9 +1,4 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Aplicacion.Builder
 {
@@ -12,6 +7,7 @@ namespace BISoft.Ejercicios.Aplicacion.Builder
         private int _productoId;
         private int _sucursalId;
         private string _descripcion;
+        private decimal _precio;
 
         public static ProductoPermitidoDtoBuilder Empty()
         {
@@ -36,9 +32,15 @@ namespace BISoft.Ejercicios.Aplicacion.Builder
             return this;
         }
 
+        public ProductoPermitidoDtoBuilder WithPrecio(decimal precio)
+        {
+            _precio = precio;
+            return this;
+        }
+
         public ProductoPermitidoDto Build()
         {
-            return new ProductoPermitidoDto(_productoId, _sucursalId, _descripcion, false);
+            return new ProductoPermitidoDto(_productoId, _sucursalId, _descripcion,_precio, false);
         }
     }
 }

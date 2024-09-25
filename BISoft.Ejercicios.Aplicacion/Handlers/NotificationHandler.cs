@@ -13,26 +13,32 @@ namespace BISoft.Ejercicios.Aplicacion.Haddlers
         private Dictionary<string, List<ISubscriber<TEntity>>> _subscribers = 
             new();
             
-        public void AddSubscriber(string eventType, ISubscriber<TEntity> subscriber)
+        public void AddSubscriber( ISubscriber<TEntity> subscriber, params string[] eventType)
         {
-            if (!_subscribers.ContainsKey(eventType))
+           foreach (var item in eventType)
             {
-                _subscribers.Add(eventType, new List<ISubscriber<TEntity>>());
-
+                if (!_subscribers.ContainsKey(item))
+                {
+                    _subscribers.Add(item, new List<ISubscriber<TEntity>>());
+                }
+                _subscribers[item].Add(subscriber);
             }
-
-            _subscribers[eventType].Add(subscriber);
         }
 
-        public Task Notify(string eventType, TEntity element)
+        public Task Notify( TEntity element, params string[] eventType)
         {
-            if (_subscribers.ContainsKey(eventType) || _subscribers.ContainsKey("Todos"))
+            foreach (var item in eventType)
             {
-                foreach (var subscriber in _subscribers[eventType])
+
+                if (_subscribers.ContainsKey(item) || _subscribers.ContainsKey("Todos"))
                 {
-                    subscriber.Update(element);
+                    foreach (var subscriber in _subscribers[item])
+                    {
+                        subscriber.Update(element);
+                    }
                 }
             }
+
             return Task.CompletedTask;
         }
 

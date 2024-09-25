@@ -22,9 +22,9 @@ namespace BISoft.Ejercicios.Test.InTest
         [Fact]
         public void Test_1 ()
         {
-            var producto = new ProductoPermitidoDto(1, 1, "Producto de prueba");
+            var producto = new ProductoPermitidoDto(1, 1,10, "Producto de prueba");
 
-            var producto1 = new ProductoPermitidoDto(1, 1, "Producto de prueba");
+            var producto1 = new ProductoPermitidoDto(1, 1,10, "Producto de prueba");
 
             var iguales = producto == producto1;
             var info = producto.ToString();

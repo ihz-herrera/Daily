@@ -35,6 +35,7 @@ Partial Class frmCompras
         Label5 = New Label()
         txtArtivulos = New TextBox()
         txtSubTotal = New TextBox()
+        btnEliminar = New Button()
         CType(dgvCompras, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -149,11 +150,21 @@ Partial Class frmCompras
         txtSubTotal.Size = New Size(125, 27)
         txtSubTotal.TabIndex = 12
         ' 
+        ' btnEliminar
+        ' 
+        btnEliminar.Location = New Point(137, 221)
+        btnEliminar.Name = "btnEliminar"
+        btnEliminar.Size = New Size(94, 29)
+        btnEliminar.TabIndex = 13
+        btnEliminar.Text = "Eliminar"
+        btnEliminar.UseVisualStyleBackColor = True
+        ' 
         ' frmCompras
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(897, 450)
+        Controls.Add(btnEliminar)
         Controls.Add(txtSubTotal)
         Controls.Add(txtArtivulos)
         Controls.Add(Label5)
@@ -187,4 +198,5 @@ Partial Class frmCompras
     Friend WithEvents Label5 As Label
     Friend WithEvents txtArtivulos As TextBox
     Friend WithEvents txtSubTotal As TextBox
+    Friend WithEvents btnEliminar As Button
 End Class
