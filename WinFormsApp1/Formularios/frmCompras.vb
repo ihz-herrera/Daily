@@ -1,4 +1,5 @@
-﻿Imports BISoft.Ejercicios.Aplicacion.Builder
+﻿Imports System.Net.Http
+Imports BISoft.Ejercicios.Aplicacion.Builder
 Imports BISoft.Ejercicios.Aplicacion.Dtos
 Imports BISoft.Ejercicios.Aplicacion.Fabricas
 Imports BISoft.Ejercicios.Aplicacion.Fachadas
@@ -134,8 +135,12 @@ Public Class frmCompras
 
     Private Sub Limpiar()
         ''Limpiar controles
-
+        txtArtivulos.Text = ""
+        txtSubTotal.Text = ""
+        dgvCompras.DataSource = Nothing
     End Sub
+
+
 
     Public Sub OnError([error] As Exception) Implements IObserver(Of CompraFacade).OnError
 

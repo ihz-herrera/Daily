@@ -26,7 +26,7 @@ namespace BISoft.Ejercicios.Aplicacion.Fabricas
                     break;
             }
 
-            return new ProveedoresCacheRepository( repository);
+            return new ProveedoresCacheRepository( repository as ProveedoresRepository);
 
 
         }

@@ -22,10 +22,20 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
 
         public DbSet<CodigoRelacionado> CodigosRelacionados { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public Context(DbContextOptions<Context> options):base(options)
         {
-            optionsBuilder.UseSqlServer("Server=.\\MSSQLServer01;Database=DailyBD;Trusted_Connection=True;");
         }
+
+        public Context()
+        {
+            
+        }
+
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer();
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,9 +9,9 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
     {
         private MemoryCache _cache;
         private CacheItemPolicy _policy;
-        private readonly IProveedoresRepository _proveedoresRepository;
+        private readonly ProveedoresRepository _proveedoresRepository;
 
-        public ProveedoresCacheRepository(IProveedoresRepository proveedoresRepository)
+        public ProveedoresCacheRepository(ProveedoresRepository proveedoresRepository)
         {
             _proveedoresRepository = proveedoresRepository;
             InicializarCache();
@@ -53,6 +53,8 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             {
                 _cache.Remove(CacheKey);
             }
+
+
         }
 
         public async Task Crear(Proveedor proveedor)
@@ -120,7 +122,7 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
 
         public IQueryable<Proveedor> GetCollection()
         {
-            throw new NotImplementedException();
+            return _proveedoresRepository.GetCollection();
         }
     }
 }

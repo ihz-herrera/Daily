@@ -13,7 +13,9 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "WinFormsApp1", "WinFormsApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.OutboxAgent", "BISoft.Ejercicios.OutboxAgent\BISoft.Ejercicios.OutboxAgent.csproj", "{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BISoft.Ejercicios.Test", "BISoft.Ejercicios.Test\BISoft.Ejercicios.Test.csproj", "{BE7CA38B-11AB-4393-993D-7D22FD256C88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Test", "BISoft.Ejercicios.Test\BISoft.Ejercicios.Test.csproj", "{BE7CA38B-11AB-4393-993D-7D22FD256C88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Api.Controllers", "BISoft.Ejercicios.Api.Controllers\BISoft.Ejercicios.Api.Controllers.csproj", "{0C002EE4-8F2C-475D-9F76-C08094160CB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BE7CA38B-11AB-4393-993D-7D22FD256C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE7CA38B-11AB-4393-993D-7D22FD256C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE7CA38B-11AB-4393-993D-7D22FD256C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C002EE4-8F2C-475D-9F76-C08094160CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C002EE4-8F2C-475D-9F76-C08094160CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C002EE4-8F2C-475D-9F76-C08094160CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C002EE4-8F2C-475D-9F76-C08094160CB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

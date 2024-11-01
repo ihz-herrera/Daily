@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contextos\Context.Postgresql.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Contextos\Context.Postgresql.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.44" />
     <PackageReference Include="Dawn.Guard" Version="1.12.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.31" />

@@ -40,6 +40,10 @@ Partial Class frmProductos
         btnLoadMore = New Button()
         lblPagination = New Label()
         txtBuscador = New TextBox()
+        cmbFabricante = New ComboBox()
+        cmbCategoria = New ComboBox()
+        Label5 = New Label()
+        Label6 = New Label()
         CType(ProveedorBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvProductos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -58,14 +62,14 @@ Partial Class frmProductos
         txtId.Location = New Point(12, 32)
         txtId.Name = "txtId"
         txtId.Size = New Size(125, 27)
-        txtId.TabIndex = 1
+        txtId.TabIndex = 0
         ' 
         ' txtDescripcion
         ' 
         txtDescripcion.Location = New Point(12, 89)
         txtDescripcion.Name = "txtDescripcion"
         txtDescripcion.Size = New Size(266, 27)
-        txtDescripcion.TabIndex = 3
+        txtDescripcion.TabIndex = 1
         ' 
         ' Label2
         ' 
@@ -81,7 +85,7 @@ Partial Class frmProductos
         txtPrecio.Location = New Point(12, 144)
         txtPrecio.Name = "txtPrecio"
         txtPrecio.Size = New Size(266, 27)
-        txtPrecio.TabIndex = 5
+        txtPrecio.TabIndex = 2
         ' 
         ' Label4
         ' 
@@ -95,19 +99,19 @@ Partial Class frmProductos
         ' chkEstatus
         ' 
         chkEstatus.AutoSize = True
-        chkEstatus.Location = New Point(12, 243)
+        chkEstatus.Location = New Point(12, 369)
         chkEstatus.Name = "chkEstatus"
         chkEstatus.Size = New Size(77, 24)
-        chkEstatus.TabIndex = 8
+        chkEstatus.TabIndex = 6
         chkEstatus.Text = "Estatus"
         chkEstatus.UseVisualStyleBackColor = True
         ' 
         ' btnGuardar
         ' 
-        btnGuardar.Location = New Point(12, 289)
+        btnGuardar.Location = New Point(184, 364)
         btnGuardar.Name = "btnGuardar"
         btnGuardar.Size = New Size(94, 29)
-        btnGuardar.TabIndex = 9
+        btnGuardar.TabIndex = 7
         btnGuardar.Text = "Guardar"
         btnGuardar.UseVisualStyleBackColor = True
         ' 
@@ -118,7 +122,7 @@ Partial Class frmProductos
         dgvProductos.Name = "dgvProductos"
         dgvProductos.RowHeadersWidth = 51
         dgvProductos.RowTemplate.Height = 29
-        dgvProductos.Size = New Size(632, 252)
+        dgvProductos.Size = New Size(620, 281)
         dgvProductos.TabIndex = 10
         ' 
         ' txtCosto
@@ -126,7 +130,7 @@ Partial Class frmProductos
         txtCosto.Location = New Point(12, 200)
         txtCosto.Name = "txtCosto"
         txtCosto.Size = New Size(266, 27)
-        txtCosto.TabIndex = 7
+        txtCosto.TabIndex = 3
         ' 
         ' Label3
         ' 
@@ -139,35 +143,38 @@ Partial Class frmProductos
         ' 
         ' btnNext
         ' 
-        btnNext.Location = New Point(843, 324)
+        btnNext.Location = New Point(843, 353)
         btnNext.Name = "btnNext"
         btnNext.Size = New Size(90, 40)
-        btnNext.TabIndex = 11
+        btnNext.TabIndex = 10
+        btnNext.TabStop = False
         btnNext.Text = ">>"
         btnNext.UseVisualStyleBackColor = True
         ' 
         ' btnPrevius
         ' 
-        btnPrevius.Location = New Point(634, 326)
+        btnPrevius.Location = New Point(629, 353)
         btnPrevius.Name = "btnPrevius"
         btnPrevius.Size = New Size(90, 40)
-        btnPrevius.TabIndex = 12
+        btnPrevius.TabIndex = 9
+        btnPrevius.TabStop = False
         btnPrevius.Text = "<<"
         btnPrevius.UseVisualStyleBackColor = True
         ' 
         ' btnLoadMore
         ' 
-        btnLoadMore.Location = New Point(313, 326)
+        btnLoadMore.Location = New Point(313, 353)
         btnLoadMore.Name = "btnLoadMore"
         btnLoadMore.Size = New Size(90, 40)
-        btnLoadMore.TabIndex = 13
+        btnLoadMore.TabIndex = 11
+        btnLoadMore.TabStop = False
         btnLoadMore.Text = "Load"
         btnLoadMore.UseVisualStyleBackColor = True
         ' 
         ' lblPagination
         ' 
         lblPagination.AutoSize = True
-        lblPagination.Location = New Point(741, 334)
+        lblPagination.Location = New Point(741, 363)
         lblPagination.Name = "lblPagination"
         lblPagination.Size = New Size(96, 20)
         lblPagination.TabIndex = 14
@@ -177,14 +184,52 @@ Partial Class frmProductos
         ' 
         txtBuscador.Location = New Point(313, 33)
         txtBuscador.Name = "txtBuscador"
-        txtBuscador.Size = New Size(632, 27)
+        txtBuscador.Size = New Size(620, 27)
         txtBuscador.TabIndex = 15
+        ' 
+        ' cmbFabricante
+        ' 
+        cmbFabricante.FormattingEnabled = True
+        cmbFabricante.Location = New Point(12, 324)
+        cmbFabricante.Name = "cmbFabricante"
+        cmbFabricante.Size = New Size(266, 28)
+        cmbFabricante.TabIndex = 5
+        ' 
+        ' cmbCategoria
+        ' 
+        cmbCategoria.FormattingEnabled = True
+        cmbCategoria.Location = New Point(12, 267)
+        cmbCategoria.Name = "cmbCategoria"
+        cmbCategoria.Size = New Size(266, 28)
+        cmbCategoria.TabIndex = 4
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(12, 298)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(77, 20)
+        Label5.TabIndex = 18
+        Label5.Text = "Fabricante"
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Location = New Point(12, 244)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(74, 20)
+        Label6.TabIndex = 19
+        Label6.Text = "Categoria"
         ' 
         ' frmProductos
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(945, 378)
+        ClientSize = New Size(945, 405)
+        Controls.Add(Label6)
+        Controls.Add(Label5)
+        Controls.Add(cmbCategoria)
+        Controls.Add(cmbFabricante)
         Controls.Add(txtBuscador)
         Controls.Add(lblPagination)
         Controls.Add(btnLoadMore)
@@ -226,4 +271,8 @@ Partial Class frmProductos
     Friend WithEvents btnLoadMore As Button
     Friend WithEvents lblPagination As Label
     Friend WithEvents txtBuscador As TextBox
+    Friend WithEvents cmbFabricante As ComboBox
+    Friend WithEvents cmbCategoria As ComboBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
 End Class

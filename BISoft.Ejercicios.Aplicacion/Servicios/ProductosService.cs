@@ -50,8 +50,10 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             if (productoExiste != null)
                 {
                 //si existe, actualizar
-                productoExiste = producto;
-                await _repo.Actualizar(productoExiste);
+              
+                await _repo.Actualizar(producto);
+
+               
             }
             else
             {
@@ -164,6 +166,18 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             return await PagerList<Producto>
                 .Create(source, parameters.PageNumber, parameters.PageSize);
                 
+        }
+
+
+        public async Task<List<Categoria>> ObtenerCategorias()
+        {
+
+           return await _repoCategorias.ObtenerTodos();
+        }
+
+        public async Task<List<Fabricante>> ObtenerFabricantes()
+        {
+            return await _repoFabricantes.ObtenerTodos();
         }
     }
 }

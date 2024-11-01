@@ -37,13 +37,18 @@ Public Class frmProductos
                 .WithPrecio(txtPrecio.Text) _
                 .WithCosto(txtCosto.Text) _
                 .WithStatus(chkEstatus.Checked) _
+                .WithCategoriaId(cmbCategoria.SelectedValue) _
+                .WithFabricanteId(cmbFabricante.SelectedValue) _
                 .Build()
 
             Await _productoService.CrearProducto(producto)
 
             MessageBox.Show("Producto guardado correctamente")
 
+
             Await _notificationHandler.Notify(producto, "Compras:Cancelar", "MuchosMas")
+
+            Await InicializarUI()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -51,13 +56,47 @@ Public Class frmProductos
 
     End Sub
 
-    Private Async Sub frmProductos_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Async Function InicializarUI() As Task
+
+        txtId.Text = ""
+        txtDescripcion.Text = ""
+        txtPrecio.Text = ""
+        txtCosto.Text = ""
+        chkEstatus.Checked = False
 
         Await CargarProductos(1)
         ActualizarPaginaGrid()
 
+    End Function
+
+    Private Async Sub frmProductos_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
+        Await CargarProductos(1)
+        Await CargarCombos()
+        ActualizarPaginaGrid()
+
 
     End Sub
+
+    Private Async Function CargarCombos() As Task
+        Try
+
+            Dim categorias = Await _productoService.ObtenerCategorias()
+            Dim fabricantes = Await _productoService.ObtenerFabricantes()
+
+            cmbCategoria.DataSource = categorias
+            cmbCategoria.DisplayMember = "Nombre"
+            cmbCategoria.ValueMember = "CategoriaId"
+
+            cmbFabricante.DataSource = fabricantes
+            cmbFabricante.DisplayMember = "Nombre"
+            cmbFabricante.ValueMember = "FabricanteId"
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+    End Function
 
     Private Async Sub btnSiguiente_Click(sender As Object, e As EventArgs) Handles btnNext.Click
         Try
@@ -133,6 +172,8 @@ Public Class frmProductos
         End Try
 
     End Sub
+
+
 
     'Public Sub AddSubscriber(subscriber As ISubscriber(Of Producto)) Implements IPublisher(Of Producto).AddSubscriber
     '    ListaObservadores.Add(subscriber)

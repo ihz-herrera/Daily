@@ -58,6 +58,8 @@ namespace BISoft.Ejercicios.Infraestructura.Repositorios
             return _context.Set<TEntity>();
         }
 
+
+
         //public void EliminarProducto(int id)
         //{
         //    var producto = _context.Productos.FirstOrDefault(x => x.ProductoId == id);

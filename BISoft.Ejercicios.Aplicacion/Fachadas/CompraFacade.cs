@@ -1,12 +1,4 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
-using BISoft.Ejercicios.Dominio.Entidades;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Aplicacion.Fachadas
 {
@@ -114,8 +106,8 @@ namespace BISoft.Ejercicios.Aplicacion.Fachadas
 
             public Unsubscriber(List<IObserver<CompraFacade>> observers, IObserver<CompraFacade> observer)
             {
-                this._observers = observers;
-                this._observer = observer;
+                _observers = observers;
+                _observer = observer;
             }
 
             public void Dispose()
