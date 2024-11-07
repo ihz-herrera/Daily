@@ -94,6 +94,11 @@ namespace BISoft.Ejercicios.Infraestructura.Contextos
                     .IsUnicode(false)
                     .HasColumnName("descripcion");
 
+                //entity.HasMany(e => e.CompraDetalles)
+                //    .WithOne(e => e.Compra)
+                //    .HasForeignKey(e => e.CompraId)
+                //    .HasConstraintName("FK_Compra_CompraDetalle");
+
                 entity.Property(e => e.Proveedor).HasColumnName("proveedor");
             });
 

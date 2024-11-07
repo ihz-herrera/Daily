@@ -1,5 +1,6 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
 using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+using BISoft.Ejercicios.Aplicacion.Extensiones;
 using BISoft.Ejercicios.Aplicacion.Helpers;
 using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
 using BISoft.Ejercicios.Dominio.Builders;
@@ -29,11 +30,18 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         }
 
       
-        public async Task<Producto> CrearProducto(Producto producto)
+        public async Task<Producto> CrearProducto(CrearProducto producto)
         {
-            //Consultar si el producto ya existe
-            var productoExiste= await _repo.ObtenerPorExpresion(
-                p=> p.ProductoId == producto.ProductoId );
+            ////Consultar si el producto ya existe
+            //var productoExiste= await _repo.ObtenerPorExpresion(
+            //    p=> p.ProductoId == producto.ProductoId );
+
+            var productoExiste = await _repo.ObtenerPorExpresion(
+                p => p.Descripcion == producto.Descripcion);
+
+            //Clausula de guarda
+            if(productoExiste is not null)
+                throw new InvalidOperationException("El producto ya existe");
 
             var categoria = await _repoCategorias.ObtenerPorExpresion(
                 c=> c.CategoriaId == producto.CategoriaId);
@@ -47,19 +55,10 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             if (fabricante == null)
                 throw new InvalidOperationException("El fabricante no existe");
 
-            if (productoExiste != null)
-                {
-                //si existe, actualizar
-              
-                await _repo.Actualizar(producto);
 
-               
-            }
-            else
-            {
-                //si no existe, crear
-                await _repo.Crear(producto);
-            }
+            var productoEntidad = producto.ToEntity();
+            await _repo.Crear(productoEntidad);
+        
 
 
             var messages = NotificationBuilder
@@ -67,16 +66,16 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 .AddEventType("ProductoCreado")
                 .AddEmail("ivanh@techsoft.com.mx"
                     , "Producto Creado"
-                    , $"Se ha creado el producto {producto.ProductoId}")
+                    , $"Se ha creado el producto {productoEntidad.ProductoId}")
                 .AddWhatsapp(w =>
                     {
                         w.PhoneNumber = "1234567890";
-                        w.Data = $"Se ha creado el producto {producto.ProductoId}";
+                        w.Data = $"Se ha creado el producto {productoEntidad.ProductoId}";
                     }
                 )
                 .AddHttpMessage(h => h
                     .AddUrl("http://localhost:5000/api/Producto")
-                    .AddData($"Se ha creado el producto {producto.ProductoId}"))
+                    .AddData($"Se ha creado el producto {productoEntidad.ProductoId}"))
                 .Build();
 
             await _outboxRepository.Crear(messages);
@@ -86,7 +85,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             {
                 MessageType = "WhatsApp",
                 EventType = "ProductoCreado",
-                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                Payload = $"Se ha creado el producto {productoEntidad.ProductoId}",
                 CreatedAt = DateTime.Now
             };
 
@@ -97,14 +96,14 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             {
                 MessageType = "Http",
                 EventType = "ProductoCreado",
-                Payload = $"Se ha creado el producto {producto.ProductoId}",
+                Payload = $"Se ha creado el producto {productoEntidad.ProductoId}",
                 CreatedAt = DateTime.Now
             };
 
             await _outboxRepository.Crear(httpOutboxMessage);
 
             //retornar el producto creado o actualizado
-            return producto;
+            return productoEntidad;
         }
 
         public async Task<Producto> ObtenerProductoPorId(int id)
@@ -151,7 +150,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         }
 
-        public async Task<PagerList<Producto>> ObtenerProductoPaginados(PaginationParameters parameters,Expression<Func<Producto,bool>> where = null )
+        public async Task<PagerList<Producto>> ObtenerProductoPaginados(ProductoParameters parameters,Expression<Func<Producto,bool>> where = null )
         {
             var source = _repo.GetCollection();
                  
@@ -159,6 +158,37 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             {
                 source = source.Where(where);
             }
+
+
+            if (!string.IsNullOrWhiteSpace(parameters.Descripcion))
+            {
+                source = source.Where(p => p.Descripcion.Contains(parameters.Descripcion));
+            }
+
+            if (parameters.Precio > 0)
+            {
+                source = source.Where(p => p.Precio >= parameters.Precio);
+            }
+
+            if (parameters.Costo > 0)
+            {
+                source = source.Where(p => p.Costo >= parameters.Costo);
+            }
+
+            if (parameters.CategoriaId > 0)
+            {
+                source = source.Where(p => p.CategoriaId == parameters.CategoriaId);
+            }
+
+            if (parameters.FabricanteId > 0)
+            {
+                source = source.Where(p => p.FabricanteId == parameters.FabricanteId);
+            }
+
+            if(parameters.PageSize>100)
+                parameters.PageSize = 100;
+           
+
 
             source = source.AsNoTracking()
                  .OrderBy(p => p.ProductoId);

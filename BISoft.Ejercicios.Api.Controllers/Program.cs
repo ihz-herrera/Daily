@@ -75,6 +75,13 @@ namespace BISoft.Ejercicios.Api.Controllers
             builder.Services.AddScoped<ProveedoresService>();
             builder.Services.AddScoped<SeguridadService>();
 
+            builder.Services.AddScoped<IProductosRepository, ProductosRepository>();
+            builder.Services.AddScoped<ICategoriasRepository, CategoriasRepository>();
+            builder.Services.AddScoped<IFabricantesRepository, FabricantesRepository>();
+            builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
+            builder.Services.AddScoped<ProductosService>();
+
+
             builder.Services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = "Bearer";

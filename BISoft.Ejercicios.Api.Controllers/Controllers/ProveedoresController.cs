@@ -29,20 +29,29 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<Proveedor>> GetProveedores([FromQuery] ProveedoresParameters parameters)
+        public async Task <ActionResult<IEnumerable<Proveedor>>> GetProveedores([FromQuery] ProveedoresParameters parameters)
         {
             //_logger.LogInformation("Obteniendo proveedores");
-
-            var proveedores = await _servicio.ObtenerProveedores(parameters);
-
-            _logger.LogDebug("Proveedores obtenidos {@proveedores}", proveedores);
-
-            if (proveedores.Any())
+            try
             {
-                return proveedores;
-            }
+                var proveedores = await _servicio.ObtenerProveedores(parameters);
 
-            return NoContent();
+                _logger.LogDebug("Proveedores obtenidos {@proveedores}", proveedores);
+
+                if (proveedores.Any())
+                {
+                    return Ok(proveedores);
+                }
+
+                return Ok(proveedores);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener proveedores");
+                //responder con status code 500
+                return StatusCode(500,$"Web App: Error Interno. Code {125}");
+            }
+           
             
 
 
@@ -65,23 +74,41 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<Proveedor> GetProveedorPorId([FromRoute] int id)
+        public async Task<ActionResult<Proveedor>> GetProveedorPorId([FromRoute] int id)
         {
-            var proveedor = await _servicio
-                .ObtenerProveedorPorId(id)
-                ;
 
-            return proveedor;
+            try
+            {
+                var proveedor = await _servicio
+                .ObtenerProveedorPorId(id);
+
+                return proveedor;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener proveedores");
+                //responder con status code 500
+                return StatusCode(500, $"Web App: Error Interno. Code {125}");
+            }
+            
         }
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> CrearProveedor([FromBody] CrearProveedor proveedor)
         {
-            var result = await _servicio.GuardarProveedor(proveedor);
+            try
+            {
+                var result = await _servicio.GuardarProveedor(proveedor);
+                return Created($"api/proveedores/{result.Id}", proveedor);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener proveedores");
+                //responder con status code 500
+                return StatusCode(500, $"Web App: Error Interno. Code {125}");
+            }
 
-
-            return Created($"api/proveedores/{result.Id}",proveedor);
         }
 
     }
