@@ -1,4 +1,5 @@
 using BISoft.Ejercicios.Api.Controllers.HealthChecks;
+using BISoft.Ejercicios.Api.Controllers.Middlewares;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Infraestructura.Contextos;
@@ -80,6 +81,7 @@ namespace BISoft.Ejercicios.Api.Controllers
             builder.Services.AddScoped<IFabricantesRepository, FabricantesRepository>();
             builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
             builder.Services.AddScoped<ProductosService>();
+            builder.Services.AddScoped<GlobalErrorMiddleware>();
 
 
             builder.Services.AddAuthentication(opt =>
@@ -121,6 +123,8 @@ namespace BISoft.Ejercicios.Api.Controllers
             app.UseAuthorization();
 
             app.UseSerilogRequestLogging();
+
+            app.UseMiddleware<GlobalErrorMiddleware>();
             
 
             app.MapHealthChecks("/health-check").RequireAuthorization();

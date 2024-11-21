@@ -1,8 +1,10 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
 using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Extensiones;
+using BISoft.Ejercicios.Aplicacion.Fabricas;
 using BISoft.Ejercicios.Aplicacion.Helpers;
 using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
+using BISoft.Ejercicios.Aplicacion.Pipelines;
 using BISoft.Ejercicios.Dominio.Builders;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
@@ -159,31 +161,17 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 source = source.Where(where);
             }
 
+            var handlers = ProductoFilterFactory.CrearFiltros();
 
-            if (!string.IsNullOrWhiteSpace(parameters.Descripcion))
+            foreach (var handler in handlers)
             {
-                source = source.Where(p => p.Descripcion.Contains(parameters.Descripcion));
+                source = handler.Handle(source, parameters);
             }
 
-            if (parameters.Precio > 0)
-            {
-                source = source.Where(p => p.Precio >= parameters.Precio);
-            }
-
-            if (parameters.Costo > 0)
-            {
-                source = source.Where(p => p.Costo >= parameters.Costo);
-            }
-
-            if (parameters.CategoriaId > 0)
-            {
-                source = source.Where(p => p.CategoriaId == parameters.CategoriaId);
-            }
-
-            if (parameters.FabricanteId > 0)
-            {
-                source = source.Where(p => p.FabricanteId == parameters.FabricanteId);
-            }
+            //if (parameters.FabricanteId > 0)
+            //{
+            //    source = source.Where(p => p.FabricanteId == parameters.FabricanteId);
+            //}
 
             if(parameters.PageSize>100)
                 parameters.PageSize = 100;
@@ -208,6 +196,42 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         public async Task<List<Fabricante>> ObtenerFabricantes()
         {
             return await _repoFabricantes.ObtenerTodos();
+        }
+
+        public async Task<ProductoDto> ActualizarProducto(int id, ActualizarProducto producto)
+        {
+            
+            //Buscar el producto
+            var productoEntidad = await _repo.ObtenerPorExpresion(p => p.ProductoId == id) 
+                ?? throw new KeyNotFoundException("El producto no existe");
+
+
+            //Actualizar las propiedades del producto
+            productoEntidad.Descripcion = producto.Descripcion;
+            productoEntidad.Precio = producto.Precio;
+            productoEntidad.SetCosto(producto.Costo);
+            //Guardar el producto
+            await _repo.Actualizar(productoEntidad);
+
+            //Regresar el producto actualizado
+
+            var categoria = await _repoCategorias.ObtenerPorExpresion(
+                c => c.CategoriaId == productoEntidad.CategoriaId);
+
+            var fabricante = await _repoFabricantes.ObtenerPorExpresion(
+                f => f.FabricanteId == productoEntidad.FabricanteId);
+
+            return new ProductoDto(
+                productoEntidad.ProductoId,
+                productoEntidad.Descripcion,
+                productoEntidad.Precio,
+                productoEntidad.Costo,
+                productoEntidad.Status,
+                categoria.Nombre,
+                fabricante.Nombre
+               
+                );
+
         }
     }
 }

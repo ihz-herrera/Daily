@@ -3,6 +3,7 @@ using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using BISoft.Ejercicios.Dominio.Entidades;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BISoft.Ejercicios.Api.Controllers.Controllers
 {
@@ -23,18 +24,24 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Producto>>> GetProductos([FromQuery]ProductoParameters parameters)
         {
-            try
-            {
-                _logger.LogDebug("Obteniendo productos");
-                var productos = await _productosService.ObtenerProductoPaginados(parameters);
-                return Ok(productos);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Error al obtener productos Error:{}",ex.Message);
-                return StatusCode(500, "Error al obtener productos");
-            }
+          
+            _logger.LogDebug("Obteniendo productos");
+            var productos = await _productosService.ObtenerProductoPaginados(parameters);
+               
+            var header = HttpContext.Response.Headers;
 
+            var pagination = new
+            {
+                productos.TotalCount,
+                productos.PageSize,
+                parameters.PageNumber,
+                productos.TotalPages,
+                productos.HasNextPage,
+                productos.HasPreviousPage
+            };
+                
+            header.Add("X-Pagination", JsonConvert.SerializeObject(pagination));
+            return Ok(productos);
             
         }
 
@@ -45,29 +52,26 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Producto>> PostProducto(CrearProducto producto)
+        public async Task<ActionResult<Producto>> CrearProducto(CrearProducto producto)
         {
-            try
-            {
-                var result = await _productosService.CrearProducto(producto);
-                _logger.LogInformation("Producto creado {@producto}",result );
+     
+            var result = await _productosService.CrearProducto(producto);
+            _logger.LogInformation("Producto creado {@producto}",result );
 
-                return Ok(result);
+            return Ok(result);
 
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogDebug(ex, "Error al crear producto");
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-               _logger.LogError("Error al crear producto Error:{error}",ex.Message);
-                return StatusCode(500, "Error al crear producto");
-            }
         }
-        
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Producto>> ActualizarProducto(int id, ActualizarProducto producto)
+        {
+
+            var result = await _productosService.ActualizarProducto(id, producto);
+            _logger.LogInformation("Producto actualizado {@producto}", result);
+
+            return Ok(result);
+
+        }
 
     }
 }
