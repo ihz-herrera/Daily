@@ -6,14 +6,14 @@ using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Text;
+using System.Threading.RateLimiting;
 
 namespace BISoft.Ejercicios.Api.Controllers
 {
@@ -34,6 +34,7 @@ namespace BISoft.Ejercicios.Api.Controllers
                 //.MinimumLevel.Information()
                 //.WriteTo.Console()
                 //.WriteTo.SQLite(sqlitePath)
+                .Enrich.FromLogContext()
                 .WriteTo.MSSqlServer(connectionString: connectionString,
                     sinkOptions: new MSSqlServerSinkOptions { TableName = "LogEvents", AutoCreateSqlTable = true, SchemaName = "dbo" })
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
@@ -44,15 +45,15 @@ namespace BISoft.Ejercicios.Api.Controllers
 
             builder.Services.AddHealthChecks()
                 .AddCheck("APIEjercicios", () => HealthCheckResult.Healthy($"API Ejercicios is working. v{version}"))
-                .AddSqlServer(connectionString,failureStatus:HealthStatus.Unhealthy)
+                .AddSqlServer(connectionString, failureStatus: HealthStatus.Unhealthy)
                 .AddUrlGroup(
                     new Uri("https://google.com"),
                     name: "OnLine",
                     failureStatus: HealthStatus.Degraded
                 )
-                .AddCheck<CustomHealthCheck>("Licenciamiento",HealthStatus.Degraded)
-                .AddCheck("MSSQLServer", new MSSQLServerHealthCheck(connectionString)
-                            ,failureStatus:HealthStatus.Degraded)   
+                .AddCheck<CustomHealthCheck>("Licenciamiento", HealthStatus.Degraded)
+                .AddCheck("Almacenamiento", new MSSQLServerHealthCheck(connectionString)
+                            , failureStatus: HealthStatus.Degraded)
                 ;
 
 
@@ -60,9 +61,27 @@ namespace BISoft.Ejercicios.Api.Controllers
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-         
 
-            
+
+            //Configurar Rate Limiter
+            builder.Services.AddRateLimiter(options => {
+
+                options.OnRejected = (context, rateLimitRule) =>
+            {
+                context.HttpContext.Response.StatusCode = 429;
+                context.HttpContext.Response.WriteAsync("To Many Request");
+                return new ValueTask();
+            };
+
+            options.AddFixedWindowLimiter("fixed-window", options =>
+                {
+                    options.PermitLimit = 60;
+                    options.Window = TimeSpan.FromSeconds(15);
+                    options.QueueLimit = 0;
+                    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                });
+            }
+            );
            
 
             builder.Services.AddDbContext<Context>(o =>
@@ -82,6 +101,7 @@ namespace BISoft.Ejercicios.Api.Controllers
             builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
             builder.Services.AddScoped<ProductosService>();
             builder.Services.AddScoped<GlobalErrorMiddleware>();
+            builder.Services.AddScoped<TraceIdentifierMiddleware>();
 
 
             builder.Services.AddAuthentication(opt =>
@@ -115,6 +135,7 @@ namespace BISoft.Ejercicios.Api.Controllers
                 app.UseSwaggerUI();
             }
 
+            
 
             app.UseHttpsRedirection();
 
@@ -122,17 +143,20 @@ namespace BISoft.Ejercicios.Api.Controllers
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseRateLimiter();
+
             app.UseSerilogRequestLogging();
 
             app.UseMiddleware<GlobalErrorMiddleware>();
             
+            app.UseMiddleware<TraceIdentifierMiddleware>();
 
-            app.MapHealthChecks("/health-check").RequireAuthorization();
+            app.MapHealthChecks("/health-check");//.RequireAuthorization();
             app.MapHealthChecks("/health-details", new HealthCheckOptions()
             {
                 //Predicate = (check) => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            }).RequireAuthorization();
+            }).RequireRateLimiting("fixed-window");//.RequireAuthorization();
 
             app.MapControllers( );
 

@@ -1,4 +1,5 @@
-﻿using Dawn;
+﻿using BISoft.Ejercicios.Dominio.Excepciones;
+using Dawn;
 using System;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace BISoft.Ejercicios.Dominio.Entidades
                 .NotEmpty().MaxLength(50);
 
             Precio = Guard.Argument(precio, nameof(precio))
-                .Positive(m=> "El valor debe ser mayor a cero");
+                .Positive(m=> "Validación: El valor debe ser mayor a cero");
 
             Costo = Guard.Argument(costo,"Costo")
                 .Positive(m => "El valor debe ser mayor a cero");
@@ -48,7 +49,7 @@ namespace BISoft.Ejercicios.Dominio.Entidades
                 .Positive(m => "El valor debe ser mayor a cero");
 
             if (Costo > Precio)
-                throw new ArgumentException("El costo no puede ser mayor al precio");
+                throw new BusinessException("El costo no puede ser mayor al precio");
         }
     }
 }

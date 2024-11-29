@@ -8,6 +8,7 @@ using BISoft.Ejercicios.Aplicacion.Pipelines;
 using BISoft.Ejercicios.Dominio.Builders;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Dominio.Excepciones;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
 using Microsoft.EntityFrameworkCore;
@@ -43,19 +44,20 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             //Clausula de guarda
             if(productoExiste is not null)
-                throw new InvalidOperationException("El producto ya existe");
+                throw new ProcessException("El producto ya existe");
 
             var categoria = await _repoCategorias.ObtenerPorExpresion(
                 c=> c.CategoriaId == producto.CategoriaId);
 
 
             if (categoria == null)
-                throw new InvalidOperationException("La categoria no existe");
+                throw new ProcessException("La categoria no existe",
+                    new List<string> { $"CategoriaId: {producto.CategoriaId.ToString()}",$"Producto: {producto.Descripcion}"});
 
             var fabricante = await _repoFabricantes.ObtenerPorExpresion(fabricante => fabricante.FabricanteId == producto.FabricanteId);
 
             if (fabricante == null)
-                throw new InvalidOperationException("El fabricante no existe");
+                throw new ProcessException("El fabricante no existe");
 
 
             var productoEntidad = producto.ToEntity();

@@ -2,12 +2,14 @@
 using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using BISoft.Ejercicios.Dominio.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace BISoft.Ejercicios.Api.Controllers.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/productos")]
     public class ProductosController : ControllerBase
     {

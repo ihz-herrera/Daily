@@ -39,13 +39,15 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
               return Unauthorized("El usuario o contraseña son incorrectos.");
           }
 
+          var sesionId = Guid.NewGuid().ToString();
 
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, usuario.Usuario),
                 new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
                 new Claim(ClaimTypes.Role, "Admin"),
-                new Claim("EmpresaId",usuario.EmpresaId.ToString())
+                new Claim("EmpresaId",usuario.EmpresaId.ToString()),
+                new Claim("SesionId", sesionId)
             };
 
             var tokenOptions = new JwtSecurityToken(

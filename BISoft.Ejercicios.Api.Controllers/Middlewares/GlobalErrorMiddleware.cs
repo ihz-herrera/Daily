@@ -1,4 +1,5 @@
 ﻿
+using BISoft.Ejercicios.Dominio.Excepciones;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -39,24 +40,25 @@ namespace BISoft.Ejercicios.Api.Controllers.Middlewares
 
             switch (ex)
             {
-                case InvalidOperationException e:
-                    _logger.LogInformation("Error de negocio: {0}", e.Message);
+                case ProcessException e://when e.Message.Contains("Validación:"):
+                    _logger.LogInformation("Error en el Proceso: {message}", e.Message);
+                    message = JsonConvert.SerializeObject(e.Details);
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
                 case KeyNotFoundException e:
-                    _logger.LogDebug("Error de negocio: {0}", e.Message);
+                    _logger.LogDebug("Error de negocio: {message}", e.Message);
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                     break;
                 case ArgumentNullException e:
-                    _logger.LogDebug("Error de negocio: {0}", e.Message);
+                    _logger.LogDebug("Error de negocio: {message}", e.Message);
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
-                case ArgumentException e:
-                    _logger.LogDebug("Error de negocio: {0}", e.Message);
+                case BusinessException e:
+                    _logger.LogDebug("Error de negocio: {message}", e.Message);
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
                 default:
-                    _logger.LogError("Error interno del servidor: {0}", ex.Message);
+                    _logger.LogError("Error interno del servidor: {message}", ex.Message);
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     message = "Error interno del servidor";
                     break;

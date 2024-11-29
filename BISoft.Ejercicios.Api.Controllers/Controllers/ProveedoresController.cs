@@ -7,6 +7,7 @@ using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.SignalR;
 using Serilog;
 
@@ -28,6 +29,7 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
         }
 
         [Authorize]
+        [EnableRateLimiting("fixed-window")]
         [HttpGet]
         public async Task <ActionResult<IEnumerable<Proveedor>>> GetProveedores([FromQuery] ProveedoresParameters parameters)
         {
