@@ -1,3 +1,4 @@
+using BISoft.Ejercicios.Api.Controllers.Dto.Options;
 using BISoft.Ejercicios.Api.Controllers.HealthChecks;
 using BISoft.Ejercicios.Api.Controllers.Middlewares;
 using BISoft.Ejercicios.Aplicacion.Servicios;
@@ -27,6 +28,14 @@ namespace BISoft.Ejercicios.Api.Controllers
 
             var sqlitePath = builder.Configuration.GetValue<string>("LogSqlitePath");
 
+            var rateLimiterOptions = builder.Configuration
+                            .GetSection("RateLimiter").Get<RateConfigurationOptions>();
+
+            var jwtOptions = builder.Configuration
+                            .GetSection("Jwt").Get<JwtConfigurationOptions>();
+
+            builder.Services.Configure<JwtConfigurationOptions>(builder.Configuration.GetSection("Jwt"));
+
             // Add services to the container.
 
             Log.Logger = new LoggerConfiguration()
@@ -41,7 +50,7 @@ namespace BISoft.Ejercicios.Api.Controllers
                 .CreateLogger();
 
             //obtner version del ensamblado
-            var version = typeof(Program).Assembly.GetName().Version.ToString();
+            var version = typeof(Program).Assembly.GetName()?.Version?.ToString();
 
             builder.Services.AddHealthChecks()
                 .AddCheck("APIEjercicios", () => HealthCheckResult.Healthy($"API Ejercicios is working. v{version}"))
@@ -66,20 +75,36 @@ namespace BISoft.Ejercicios.Api.Controllers
             //Configurar Rate Limiter
             builder.Services.AddRateLimiter(options => {
 
+                options.AddPolicy("fixed-window", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Request.Headers["X-TraceIdentifier"]
+                                                .FirstOrDefault(),
+                 factory: _ => new FixedWindowRateLimiterOptions
+                     {
+                         PermitLimit = rateLimiterOptions?.PermitLimit??10,
+                         Window = TimeSpan.FromSeconds( rateLimiterOptions?.WindowInSeconds??60),
+                         QueueLimit = rateLimiterOptions?.QueueLimit??0,
+                         QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+                     }
+                    )
+                );
+
+
+
                 options.OnRejected = (context, rateLimitRule) =>
-            {
+                {
                 context.HttpContext.Response.StatusCode = 429;
                 context.HttpContext.Response.WriteAsync("To Many Request");
                 return new ValueTask();
-            };
+                };
 
-            options.AddFixedWindowLimiter("fixed-window", options =>
-                {
-                    options.PermitLimit = 60;
-                    options.Window = TimeSpan.FromSeconds(15);
-                    options.QueueLimit = 0;
-                    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                });
+                options.AddFixedWindowLimiter("fixed-window-2", options =>
+                    {
+                        options.PermitLimit = 60;
+                        options.Window = TimeSpan.FromSeconds(15);
+                        options.QueueLimit = 0;
+                        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    });
             }
             );
            
@@ -117,9 +142,9 @@ namespace BISoft.Ejercicios.Api.Controllers
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = "http://localhost:5000",
-                    ValidAudience = "api.ejercicios",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345superSecretKey@345"))
+                    ValidIssuer = jwtOptions.ValidIssuer,
+                    ValidAudience =  jwtOptions.ValidAudience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.IssuerSigningKey))
                 };
             } );
 

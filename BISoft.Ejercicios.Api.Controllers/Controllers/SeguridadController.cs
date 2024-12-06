@@ -1,6 +1,8 @@
 ﻿using BISoft.Ejercicios.Api.Controllers.Dto;
+using BISoft.Ejercicios.Api.Controllers.Dto.Options;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,10 +16,13 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
     {
 
         private readonly SeguridadService _servicio;
+        private readonly JwtConfigurationOptions _jwt;
+            
 
-        public SeguridadController(SeguridadService servicio)
+        public SeguridadController(SeguridadService servicio,IOptions<JwtConfigurationOptions> jwt)
         {
             _servicio = servicio;
+            _jwt = jwt.Value;
         }
 
 
@@ -51,11 +56,11 @@ namespace BISoft.Ejercicios.Api.Controllers.Controllers
             };
 
             var tokenOptions = new JwtSecurityToken(
-                issuer: "http://localhost:5000",
-                audience: "api.ejercicios",
+                issuer: _jwt.ValidIssuer,
+                audience: _jwt.ValidAudience,
                 expires: DateTime.Now.AddMinutes(5),
                 claims: claims,
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345superSecretKey@345")), SecurityAlgorithms.HmacSha256)
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.IssuerSigningKey)), SecurityAlgorithms.HmacSha256)
                 );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
