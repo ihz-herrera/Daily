@@ -1,6 +1,7 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

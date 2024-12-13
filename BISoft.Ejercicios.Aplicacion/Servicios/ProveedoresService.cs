@@ -8,7 +8,9 @@ using System.ComponentModel.Design;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
-    public class ProveedoresService
+   
+
+    public class ProveedoresService 
     {
         private readonly IProveedoresRepository _repo;
         private readonly ILogger<ProveedoresService> _logger;
@@ -25,7 +27,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             // Consultar si el proveedor ya existe
             var proveedor = await _repo.ObtenerPorExpresion(p => p.Nombre == proveedorDto.Nombre);
-                //_repo.ObtenerProveedorPorId(proveedorDto);
+            //_repo.ObtenerProveedorPorId(proveedorDto);
             if (proveedor != null)
             {
                 //si existe, actualizar
@@ -41,7 +43,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             }
             else
             {
-               
+
 
                 //si no existe, crear
                 proveedor = new Proveedor
@@ -59,7 +61,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
 
         }
-    
+
         public async Task<IEnumerable<Proveedor>> ObtenerProveedores(ProveedoresParameters parametros)
         {
             var proveedores = _repo.GetCollection();  // await _repo.ObtenerTodos();

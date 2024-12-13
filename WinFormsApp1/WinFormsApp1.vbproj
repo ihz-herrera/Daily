@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BISoft.Ejercicios.Aplicacion\BISoft.Ejercicios.Aplicacion.csproj" />
+    <ProjectReference Include="..\BISoft.Ejercicios.Presentacion.Infraestructura\BISoft.Ejercicios.Presentacion.Infraestructura.csproj" />
   </ItemGroup>
 
   <ItemGroup>

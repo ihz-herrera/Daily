@@ -11,19 +11,22 @@ using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Dominio.Excepciones;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
+using BISoft.Ejercicios.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
-    public class ProductosService
+  
+
+    public class ProductosService 
     {
         private readonly IProductosRepository _repo;
         private readonly ICategoriasRepository _repoCategorias;
         private readonly IFabricantesRepository _repoFabricantes;
         private readonly IOutboxRepository _outboxRepository;
 
-        public ProductosService(IProductosRepository repo,ICategoriasRepository repoCategorias,
+        public ProductosService(IProductosRepository repo, ICategoriasRepository repoCategorias,
             IFabricantesRepository fabricantesRepository, IOutboxRepository outboxRepository)
         {
             _outboxRepository = outboxRepository; // new OutboxRepository(new Context());
@@ -32,7 +35,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             _repoFabricantes = fabricantesRepository;
         }
 
-      
+
         public async Task<Producto> CrearProducto(CrearProducto producto)
         {
             ////Consultar si el producto ya existe
@@ -43,16 +46,16 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 p => p.Descripcion == producto.Descripcion);
 
             //Clausula de guarda
-            if(productoExiste is not null)
+            if (productoExiste is not null)
                 throw new ProcessException("El producto ya existe");
 
             var categoria = await _repoCategorias.ObtenerPorExpresion(
-                c=> c.CategoriaId == producto.CategoriaId);
+                c => c.CategoriaId == producto.CategoriaId);
 
 
             if (categoria == null)
                 throw new ProcessException("La categoria no existe",
-                    new List<string> { $"CategoriaId: {producto.CategoriaId.ToString()}",$"Producto: {producto.Descripcion}"});
+                    new List<string> { $"CategoriaId: {producto.CategoriaId.ToString()}", $"Producto: {producto.Descripcion}" });
 
             var fabricante = await _repoFabricantes.ObtenerPorExpresion(fabricante => fabricante.FabricanteId == producto.FabricanteId);
 
@@ -62,7 +65,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             var productoEntidad = producto.ToEntity();
             await _repo.Crear(productoEntidad);
-        
+
 
 
             var messages = NotificationBuilder
@@ -112,13 +115,13 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         public async Task<Producto> ObtenerProductoPorId(int id)
         {
-            return await _repo.ObtenerPorExpresion( p=> p.ProductoId == id);
+            return await _repo.ObtenerPorExpresion(p => p.ProductoId == id);
         }
 
         public async Task<IEnumerable<ProductoDto>> ObtenerProductos()
         {
             var products = _repo.GetCollection()
-                .Include(p=> p.CodigosRelacionados);
+                .Include(p => p.CodigosRelacionados);
 
             var categorias = _repoCategorias.GetCollection();
 
@@ -147,17 +150,17 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             //    {
             //        Producto = p,
             //        Fabricante = f,
-                    
+
             //    });
-               
+
             return await productos.ToListAsync();
 
         }
 
-        public async Task<PagerList<Producto>> ObtenerProductoPaginados(ProductoParameters parameters,Expression<Func<Producto,bool>> where = null )
+        public async Task<PagerList<Producto>> ObtenerProductoPaginados(ProductoParameters parameters, Expression<Func<Producto, bool>> where = null)
         {
             var source = _repo.GetCollection();
-                 
+
             if (where != null)
             {
                 source = source.Where(where);
@@ -175,9 +178,9 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
             //    source = source.Where(p => p.FabricanteId == parameters.FabricanteId);
             //}
 
-            if(parameters.PageSize>100)
+            if (parameters.PageSize > 100)
                 parameters.PageSize = 100;
-           
+
 
 
             source = source.AsNoTracking()
@@ -185,14 +188,14 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             return await PagerList<Producto>
                 .Create(source, parameters.PageNumber, parameters.PageSize);
-                
+
         }
 
 
         public async Task<List<Categoria>> ObtenerCategorias()
         {
 
-           return await _repoCategorias.ObtenerTodos();
+            return await _repoCategorias.ObtenerTodos();
         }
 
         public async Task<List<Fabricante>> ObtenerFabricantes()
@@ -202,9 +205,9 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
         public async Task<ProductoDto> ActualizarProducto(int id, ActualizarProducto producto)
         {
-            
+
             //Buscar el producto
-            var productoEntidad = await _repo.ObtenerPorExpresion(p => p.ProductoId == id) 
+            var productoEntidad = await _repo.ObtenerPorExpresion(p => p.ProductoId == id)
                 ?? throw new KeyNotFoundException("El producto no existe");
 
 
@@ -231,7 +234,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 productoEntidad.Status,
                 categoria.Nombre,
                 fabricante.Nombre
-               
+
                 );
 
         }

@@ -7,11 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BISoft.Ejercicios.Infraestructura\BISoft.Ejercicios.Infraestructura.csproj" />
     <ProjectReference Include="..\BISoft.Ejercicios.Shared\BISoft.Ejercicios.Shared.csproj" />
   </ItemGroup>
 

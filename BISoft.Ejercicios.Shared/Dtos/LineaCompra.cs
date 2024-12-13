@@ -1,4 +1,4 @@
-﻿namespace BISoft.Ejercicios.Aplicacion.Dtos;
+﻿namespace BISoft.Ejercicios.Shared.Dtos
 public record LineaCompra (int ProductoId, string Descripcion, int Cantidad, decimal Precio, decimal Descuento);
 //{
 //    public int ProductoId { get; private set; }
