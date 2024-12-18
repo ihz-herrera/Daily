@@ -1,7 +1,7 @@
-﻿using BISoft.Ejercicios.Aplicacion.Dtos;
-using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

@@ -1,15 +1,10 @@
-﻿using BISoft.Ejercicios.Api.Controllers.Dto;
-using BISoft.Ejercicios.Aplicacion.Dtos;
-using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Servicios;
 using BISoft.Ejercicios.Dominio.Entidades;
-using BISoft.Ejercicios.Infraestructura.Contextos;
-using BISoft.Ejercicios.Infraestructura.Repositorios;
+using BISoft.Ejercicios.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.SignalR;
-using Serilog;
 
 namespace BISoft.Ejercicios.Api.Controllers.Controllers
 {
