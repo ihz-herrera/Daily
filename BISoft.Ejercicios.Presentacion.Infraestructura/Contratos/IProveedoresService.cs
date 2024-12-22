@@ -1,5 +1,4 @@
-﻿using BISoft.Ejercicios.Presentacion.Infraestructura.Dtos;
-using BISoft.Ejercicios.Shared.Dtos;
+﻿using BISoft.Ejercicios.Shared.Dtos;
 
 namespace BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
 {
@@ -8,5 +7,6 @@ namespace BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
         Task<ProveedorDto> GuardarProveedor(string id, string nombre, string direccion);
         Task<IEnumerable<ProveedorDto>> ObtenerProveedores();
         Task<ProveedorDto> ObtenerProveedorPorId(int id);
+        Task<ProveedorDto> GuardarProveedor(CrearProveedor proveedor);
     }
 }

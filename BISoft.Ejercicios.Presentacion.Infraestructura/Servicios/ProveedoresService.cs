@@ -1,11 +1,6 @@
 ﻿using BISoft.Ejercicios.Presentacion.Infraestructura.Contratos;
 using BISoft.Ejercicios.Shared.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Presentacion.Infraestructura.Servicios
 {
