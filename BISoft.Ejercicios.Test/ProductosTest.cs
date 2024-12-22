@@ -1,4 +1,5 @@
-﻿using BISoft.Ejercicios.Dominio.Builders;
+﻿using BISoft.Ejercicios.Aplicacion.Extensiones;
+using BISoft.Ejercicios.Dominio.Builders;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Test.Builders;
 using BISoft.Ejercicios.Test.Fabricas;

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BISoft.Ejercicios.Aplicacion\BISoft.Ejercicios.Aplicacion.csproj" />
+    <ProjectReference Include="..\BISoft.Ejercicios.Shared\BISoft.Ejercicios.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
