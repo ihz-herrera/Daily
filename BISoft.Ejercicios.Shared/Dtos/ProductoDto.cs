@@ -1,11 +1,4 @@
-﻿using BISoft.Ejercicios.Dominio.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BISoft.Ejercicios.Shared.Dtos
+﻿namespace BISoft.Ejercicios.Shared.Dtos
 {
     public class ProductoDto
     {

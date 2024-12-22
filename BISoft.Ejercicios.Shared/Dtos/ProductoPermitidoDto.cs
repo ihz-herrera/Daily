@@ -24,7 +24,7 @@ namespace BISoft.Ejercicios.Shared.Dtos
             Validado = validado;
         }
 
-        public ProductoPermitidoDto(int productoId, int sucursalId, decimal precio, string descripcion)
+        public ProductoPermitidoDto(int productoId, int sucursalId, string descripcion, decimal precio)
         {
             ProductoId = productoId;
             SucursalId = sucursalId;
