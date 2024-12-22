@@ -1,4 +1,5 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
+using BISoft.Ejercicios.Shared.Dtos;
 
 namespace BISoft.Ejercicios.Aplicacion.Fachadas
 {
@@ -30,8 +31,9 @@ namespace BISoft.Ejercicios.Aplicacion.Fachadas
             if (productoBuscado != null)
             {
                 InternalLineas.Remove(productoBuscado); 
-                InternalLineas.Add( productoBuscado with { Cantidad= productoBuscado.Cantidad+1} );
-        
+                InternalLineas.Add( 
+                    new LineaCompra(producto.ProductoId, producto.Descripcion, productoBuscado.Cantidad + 1, producto.Precio, 0)
+                    );
             }
             else
             {
@@ -80,7 +82,9 @@ namespace BISoft.Ejercicios.Aplicacion.Fachadas
                 if (productoBuscado.Cantidad > 1)
                 {
                     InternalLineas.Remove(productoBuscado);
-                    InternalLineas.Add(productoBuscado with { Cantidad = productoBuscado.Cantidad - 1 });
+                    InternalLineas.Add(
+                         new LineaCompra(producto.ProductoId, producto.Descripcion, productoBuscado.Cantidad - 1, producto.Precio, 0)
+                        );
                 }
                 else
                 {

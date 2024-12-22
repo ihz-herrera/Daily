@@ -1,4 +1,5 @@
 ﻿using BISoft.Ejercicios.Aplicacion.Dtos;
+using BISoft.Ejercicios.Shared.Dtos;
 
 namespace BISoft.Ejercicios.Aplicacion.Builder
 {

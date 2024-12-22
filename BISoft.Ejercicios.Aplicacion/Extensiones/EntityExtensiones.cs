@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Shared.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

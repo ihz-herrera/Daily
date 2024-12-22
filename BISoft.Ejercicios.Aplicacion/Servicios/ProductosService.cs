@@ -1,23 +1,18 @@
-﻿using BISoft.Ejercicios.Aplicacion.Dtos;
-using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
+﻿using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Aplicacion.Extensiones;
 using BISoft.Ejercicios.Aplicacion.Fabricas;
 using BISoft.Ejercicios.Aplicacion.Helpers;
 using BISoft.Ejercicios.Aplicacion.Notificaciones.Builders;
-using BISoft.Ejercicios.Aplicacion.Pipelines;
-using BISoft.Ejercicios.Dominio.Builders;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Dominio.Excepciones;
-using BISoft.Ejercicios.Infraestructura.Contextos;
-using BISoft.Ejercicios.Infraestructura.Repositorios;
 using BISoft.Ejercicios.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
-  
+
 
     public class ProductosService 
     {

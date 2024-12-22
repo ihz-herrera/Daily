@@ -2,6 +2,7 @@
 using BISoft.Ejercicios.Aplicacion.Dtos.Parametros;
 using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
+using BISoft.Ejercicios.Shared.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.Design;

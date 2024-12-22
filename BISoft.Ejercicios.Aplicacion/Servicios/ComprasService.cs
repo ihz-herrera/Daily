@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace BISoft.Ejercicios.Aplicacion.Servicios
 {
+    
+
     public class ComprasService
     {
 
@@ -31,7 +33,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
         }
 
 
-        public async Task<Compra> CrearCompra(Compra compra,List<ProductoPermitidoDto> permitidos)
+        public async Task<Compra> CrearCompra(Compra compra, List<ProductoPermitidoDto> permitidos)
         {
             //Validar que los productos esten permitidos
             var productosNoValidados = permitidos
@@ -50,7 +52,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
                 throw new Exception("No se pueden comprar productos de otra sucursal");
             }
 
-            compra.CompraDetalles = permitidos.Select(p => 
+            compra.CompraDetalles = permitidos.Select(p =>
             new CompraDetalle
             {
                 ProductoId = p.ProductoId,
@@ -60,7 +62,7 @@ namespace BISoft.Ejercicios.Aplicacion.Servicios
 
             return await CrearCompra(compra);
 
-           
+
         }
 
         private void ValidarProductos(List<ProductoPermitidoDto> productosNoValidados)
