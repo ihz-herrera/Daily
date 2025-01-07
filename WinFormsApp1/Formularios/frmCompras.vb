@@ -1,38 +1,36 @@
-﻿Imports System.Net.Http
-Imports BISoft.Ejercicios.Aplicacion.Builder
-Imports BISoft.Ejercicios.Aplicacion.Dtos
-Imports BISoft.Ejercicios.Aplicacion.Fabricas
-Imports BISoft.Ejercicios.Aplicacion.Fachadas
-Imports BISoft.Ejercicios.Aplicacion.Servicios
-Imports BISoft.Ejercicios.Dominio.Entidades
-Imports BISoft.Ejercicios.Dominio.Observador
+﻿Imports BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
+Imports BISoft.Ejercicios.Presentacion.Infraestructura.Fachadas
+Imports BISoft.Ejercicios.Presentacion.Infraestructura.Observador
+Imports BISoft.Ejercicios.Shared.Dtos
+
 
 Public Class frmCompras
-    Implements ISubscriber(Of Producto), IObserver(Of CompraFacade)
+    Implements ISubscriber(Of ProductoDto), IObserver(Of CompraFacade)
 
-    Private ReadOnly _productosService As ProductosService
-    Private ReadOnly _sucursalesService As SucursalesService
-    Private ReadOnly _proveedoresService As ProveedoresService
-    Private ReadOnly _comprasService As ComprasService
+    Private ReadOnly _productosService As IProductosService
+    Private ReadOnly _sucursalesService As ISucursalesService
+    Private ReadOnly _proveedoresService As IProveedoresService
+    Private ReadOnly _comprasService As IComprasService
 
     Private _compra As CompraFacade
 
 
 
-    Public Sub New(productoService As ProductosService, comprasService As ComprasService)
+    Public Sub New(productoService As IProductosService, comprasService As IComprasService,
+                   sucuralesService As ISucursalesService, proveedoresService As IProveedoresService)
         InitializeComponent()
 
         _comprasService = comprasService
 
-        ''Crear repositorios
-        Dim productosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
-        Dim sucursalesRepository = SucursalesRepositoryFactory.CrearSucursalesRepository()
-        Dim proveedoresRepository = ProveedoresRepositoryFactory.CrearProveedoresRepository("EF")
+        '''Crear repositorios
+        'Dim productosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
+        'Dim sucursalesRepository = SucursalesRepositoryFactory.CrearSucursalesRepository()
+        'Dim proveedoresRepository = ProveedoresRepositoryFactory.CrearProveedoresRepository("EF")
 
 
         _productosService = productoService 'New ProductosService(productosRepository)
-        _sucursalesService = New SucursalesService(sucursalesRepository)
-        _proveedoresService = New ProveedoresService(proveedoresRepository)
+        _sucursalesService = sucuralesService
+        _proveedoresService = proveedoresService
 
     End Sub
 
@@ -77,7 +75,7 @@ Public Class frmCompras
 
     End Sub
 
-    Public Function Update(element As Producto) As Task Implements ISubscriber(Of Producto).Update
+    Public Function Update(element As ProductoDto) As Task Implements ISubscriber(Of ProductoDto).Update
         ''Actualizar de lista de productos
         ''Mensaje de actualizacion
         Me.Text += "Producto actualizado"
@@ -87,7 +85,10 @@ Public Class frmCompras
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
 
 
-        Dim compra = New Compra()
+
+        Dim sucursalId = cmbSucursal.SelectedValue
+
+        Dim compra = New CompraDto(sucursalId)
 
         'Dim detalle = New CompraDetalle With {
         '    .Cantidad = 10,
@@ -97,7 +98,17 @@ Public Class frmCompras
 
         Dim listaDetalles = New List(Of ProductoPermitidoDto)
 
-        Dim productoPermitido = New ProductoPermitidoDtoBuilder().WithProductoId(1).WithDescripcion("Un producto").WithSucursalId(1).Build()
+
+        Dim productoPermitidoNuevo = New _
+            ProductoPermitidoDto(1, 1, "Suc1", 10)
+
+
+
+        Dim productoPermitido = New ProductoPermitidoDtoBuilder() _
+            .WithProductoId(1) _
+            .WithDescripcion("Un producto") _
+            .WithSucursalId(1) _
+            .Build()
         '    1, 2, "Un producto", True)
 
         'listaDetalles.Add(productoPermitido)

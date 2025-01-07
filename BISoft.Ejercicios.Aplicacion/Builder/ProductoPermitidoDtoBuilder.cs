@@ -41,7 +41,7 @@ namespace BISoft.Ejercicios.Aplicacion.Builder
 
         public ProductoPermitidoDto Build()
         {
-            return new ProductoPermitidoDto(_productoId, _sucursalId, _descripcion,_precio, false);
+            return new ProductoPermitidoDto(_productoId, _sucursalId, _descripcion,_precio);
         }
     }
 }

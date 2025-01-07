@@ -1,11 +1,7 @@
-﻿Imports BISoft.Ejercicios.Aplicacion.Dtos.Parametros
-Imports BISoft.Ejercicios.Aplicacion.Fabricas
-Imports BISoft.Ejercicios.Aplicacion.Helpers
-Imports BISoft.Ejercicios.Aplicacion.Servicios
-Imports BISoft.Ejercicios.Dominio.Builders
-Imports BISoft.Ejercicios.Dominio.Entidades
-Imports BISoft.Ejercicios.Dominio.Observador
-Imports BISoft.Ejercicios.Infraestructura.Repositorios
+﻿Imports BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
+Imports BISoft.Ejercicios.Presentacion.Infraestructura.Observador
+Imports BISoft.Ejercicios.Shared.Dtos
+Imports BISoft.Ejercicios.Shared.Helpers
 
 
 ''Todo: Bloquear tareas asincronas en los eventos
@@ -15,11 +11,11 @@ Public Class frmProductos
 
     'Private ListaObservadores As List(Of ISubscriber(Of Producto)) = New List(Of ISubscriber(Of Producto))
 
-    Private ReadOnly _productoService As ProductosService
-    Private _pagerProductList As PagerList(Of Producto)
-    Private _notificationHandler As IPublisher(Of Producto)
+    Private ReadOnly _productoService As IProductosService
+    Private _pagerProductList As PagerList(Of ProductoDto)
+    Private _notificationHandler As IPublisher(Of ProductoDto)
 
-    Public Sub New(productoService As ProductosService, notificationHandler As IPublisher(Of Producto))
+    Public Sub New(productoService As IProductosService, notificationHandler As IPublisher(Of ProductoDto))
         InitializeComponent()
 
         Dim repositorio As ProductosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")

@@ -22,6 +22,7 @@ Partial Class frmProveedores
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProveedores))
         Label1 = New Label()
         txtId = New TextBox()
         txtNombre = New TextBox()
@@ -29,6 +30,7 @@ Partial Class frmProveedores
         txtDireccion = New TextBox()
         Label3 = New Label()
         btnGuardas = New Button()
+        Button1 = New Button()
         SuspendLayout()
         ' 
         ' Label1
@@ -88,11 +90,24 @@ Partial Class frmProveedores
         btnGuardas.Text = "Guardar"
         btnGuardas.UseVisualStyleBackColor = True
         ' 
+        ' Button1
+        ' 
+        Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), Image)
+        Button1.BackgroundImageLayout = ImageLayout.Stretch
+        Button1.FlatAppearance.BorderSize = 0
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.Location = New Point(179, 62)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(32, 29)
+        Button1.TabIndex = 7
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' frmProveedores
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Button1)
         Controls.Add(btnGuardas)
         Controls.Add(txtDireccion)
         Controls.Add(Label3)
@@ -113,4 +128,5 @@ Partial Class frmProveedores
     Friend WithEvents txtDireccion As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents btnGuardas As Button
+    Friend WithEvents Button1 As Button
 End Class

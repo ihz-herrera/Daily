@@ -1,6 +1,4 @@
-﻿using BISoft.Ejercicios.Shared.Helpers;
-using BISoft.Ejercicios.Shared.Dtos;
-using System.Linq.Expressions;
+﻿using BISoft.Ejercicios.Shared.Dtos;
 
 namespace BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
 {
