@@ -65,6 +65,8 @@ namespace BISoft.Ejercicios.Test
 
             var producto = ProductoFactory.CrearProductoValidoActivo;
 
+            
+
 
             // Act
             await fakeService.CrearProducto(producto);

@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
+    <ProjectReference Include="..\BISoft.Ejercicios.Shared\BISoft.Ejercicios.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BISoft.Ejercicios.Shared\BISoft.Ejercicios.Shared.csproj" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
 
 </Project>

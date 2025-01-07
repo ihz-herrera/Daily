@@ -1,4 +1,5 @@
-﻿Imports BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
+﻿Imports BISoft.Ejercicios.Aplicacion.Dtos.Parametros
+Imports BISoft.Ejercicios.Presentacion.Infraestructura.Contratos
 Imports BISoft.Ejercicios.Presentacion.Infraestructura.Observador
 Imports BISoft.Ejercicios.Shared.Dtos
 Imports BISoft.Ejercicios.Shared.Helpers
@@ -13,12 +14,11 @@ Public Class frmProductos
 
     Private ReadOnly _productoService As IProductosService
     Private _pagerProductList As PagerList(Of ProductoDto)
-    Private _notificationHandler As IPublisher(Of ProductoDto)
+    Private _notificationHandler As IPublisher(Of CrearProducto)
 
-    Public Sub New(productoService As IProductosService, notificationHandler As IPublisher(Of ProductoDto))
+    Public Sub New(productoService As IProductosService, notificationHandler As IPublisher(Of CrearProducto))
         InitializeComponent()
 
-        Dim repositorio As ProductosRepository = ProductosRepositoryFactory.CrearProductosRepository("EF")
         _productoService = productoService ' New ProductosService(repositorio)
         _notificationHandler = notificationHandler
 
@@ -27,15 +27,12 @@ Public Class frmProductos
     Private Async Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Try
 
-            Dim producto = ProductoBuilder.Empty _
-                .WithId(txtId.Text) _
-                .WithDescripcion(txtDescripcion.Text) _
-                .WithPrecio(txtPrecio.Text) _
-                .WithCosto(txtCosto.Text) _
-                .WithStatus(chkEstatus.Checked) _
-                .WithCategoriaId(cmbCategoria.SelectedValue) _
-                .WithFabricanteId(cmbFabricante.SelectedValue) _
-                .Build()
+            Dim producto = New CrearProducto(
+                txtDescripcion.Text,
+                txtPrecio.Text,
+                txtCosto.Text,
+                cmbFabricante.SelectedValue,
+                cmbCategoria.SelectedValue)
 
             Await _productoService.CrearProducto(producto)
 

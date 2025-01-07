@@ -4,6 +4,7 @@ using BISoft.Ejercicios.Dominio.Contratos;
 using BISoft.Ejercicios.Dominio.Entidades;
 using BISoft.Ejercicios.Infraestructura.Contextos;
 using BISoft.Ejercicios.Infraestructura.Repositorios;
+using BISoft.Ejercicios.Shared.Dtos;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -42,5 +43,17 @@ namespace BISoft.Ejercicios.Test.Fabricas
                 .WithFabricanteId(1)
                 .Build();
 
+
+        public static CrearProducto CrearProductoValidoActivoDto =>
+          new CrearProducto("Producto 1", 100, 50, 1, 1);
+
+
+
+
+
+        public static CrearProducto CreaProductoInvalidoActivoDto =>
+            new CrearProducto("Producto 1", 100, 110, 1, 1);
     }
+  
+
 }

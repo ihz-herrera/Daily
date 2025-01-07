@@ -17,9 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Test", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Api.Controllers", "BISoft.Ejercicios.Api.Controllers\BISoft.Ejercicios.Api.Controllers.csproj", "{0C002EE4-8F2C-475D-9F76-C08094160CB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BISoft.Ejercicios.Presentacion.Infraestructura", "BISoft.Ejercicios.Presentacion.Infraestructura\BISoft.Ejercicios.Presentacion.Infraestructura.csproj", "{5BFAEE15-E0D0-4C7D-BF40-EE003134D1AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Presentacion.Infraestructura", "BISoft.Ejercicios.Presentacion.Infraestructura\BISoft.Ejercicios.Presentacion.Infraestructura.csproj", "{5BFAEE15-E0D0-4C7D-BF40-EE003134D1AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BISoft.Ejercicios.Shared", "BISoft.Ejercicios.Shared\BISoft.Ejercicios.Shared.csproj", "{B51B84AC-172A-46F3-8F05-53440C5071A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BISoft.Ejercicios.Shared", "BISoft.Ejercicios.Shared\BISoft.Ejercicios.Shared.csproj", "{B51B84AC-172A-46F3-8F05-53440C5071A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacion", "{0D83B347-725F-43A1-9258-CADAB5B0C0AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{75CDDE4A-B1BA-426D-BE02-96848F6F7B2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +72,17 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3BF74F2F-1194-467F-90F3-DC2DDDE77FC3} = {D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}
+		{F7C6C6D0-E0B4-40CC-A5AB-722AF3F772DA} = {D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}
+		{B7E797C3-120B-483E-8461-431C2F65D562} = {D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}
+		{86E2197E-E23A-496F-827C-E48A9892FCE3} = {0D83B347-725F-43A1-9258-CADAB5B0C0AA}
+		{04A905E5-9A3E-4D32-8DEB-E8CF80C909CC} = {D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}
+		{BE7CA38B-11AB-4393-993D-7D22FD256C88} = {75CDDE4A-B1BA-426D-BE02-96848F6F7B2C}
+		{0C002EE4-8F2C-475D-9F76-C08094160CB5} = {D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}
+		{5BFAEE15-E0D0-4C7D-BF40-EE003134D1AA} = {0D83B347-725F-43A1-9258-CADAB5B0C0AA}
+		{B51B84AC-172A-46F3-8F05-53440C5071A2} = {D46B3FF1-EBA1-4F9B-BAB2-2D7E1B3C09D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC1354EF-FFAC-4D98-8578-EF29DD42CD2D}
